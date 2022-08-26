@@ -48,6 +48,8 @@ public class CacheConfiguration {
             createCache(cm, com.zipedoc.domain.User.class.getName());
             createCache(cm, com.zipedoc.domain.Authority.class.getName());
             createCache(cm, com.zipedoc.domain.User.class.getName() + ".authorities");
+            createCache(cm, com.zipedoc.domain.Document.class.getName());
+            createCache(cm, com.zipedoc.domain.SharedUser.class.getName());
             // jhipster-needle-ehcache-add-entry
         };
     }

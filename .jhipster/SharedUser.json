@@ -1,0 +1,27 @@
+{
+  "applications": "*",
+  "changelogDate": "20220826012239",
+  "dto": "no",
+  "embedded": false,
+  "entityTableName": "shared_user",
+  "fields": [
+    {
+      "fieldName": "userName",
+      "fieldType": "String"
+    }
+  ],
+  "fluentMethods": true,
+  "jpaMetamodelFiltering": false,
+  "name": "SharedUser",
+  "pagination": "no",
+  "readOnly": false,
+  "relationships": [
+    {
+      "otherEntityField": "documentTitle",
+      "otherEntityName": "document",
+      "relationshipName": "title",
+      "relationshipType": "many-to-one"
+    }
+  ],
+  "service": "no"
+}

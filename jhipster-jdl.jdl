@@ -1,0 +1,15 @@
+entity Document {
+	documentTitle String
+    createdDate LocalDate
+    modifiedDate LocalDate
+    s3key String
+}
+
+entity SharedUser {
+    userName String
+}
+
+relationship ManyToOne {
+	Document{userName(login)} to User
+    SharedUser{title(documentTitle)} to Document
+}
