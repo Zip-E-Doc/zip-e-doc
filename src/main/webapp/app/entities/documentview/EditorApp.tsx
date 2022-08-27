@@ -1,7 +1,7 @@
 import React, { useRef } from 'react';
 import { Editor } from '@tinymce/tinymce-react';
 
-export default function EditorApp() {
+export default function EditorApp({ documentData }) {
   const editorRef = useRef(null);
   const log = () => {
     if (editorRef.current) {
@@ -14,7 +14,7 @@ export default function EditorApp() {
       <Editor
         apiKey="liy4lig7ryv9z846a2okl5qh5c1dsf5ir7s9ye8xzg3dpqwu"
         onInit={(evt, editor) => (editorRef.current = editor)}
-        initialValue="<p>This is the initial content of the editor.</p>"
+        initialValue={documentData.documentTitle}
         init={{
           height: 500,
           menubar: false,
