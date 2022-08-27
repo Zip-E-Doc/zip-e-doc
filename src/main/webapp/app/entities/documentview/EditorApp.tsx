@@ -11,6 +11,7 @@ export default function EditorApp({ documentData }) {
 
   return (
     <div>
+      <h2>{documentData.documentTitle}</h2>
       <Editor
         apiKey="liy4lig7ryv9z846a2okl5qh5c1dsf5ir7s9ye8xzg3dpqwu"
         onInit={(evt, editor) => (editorRef.current = editor)}
