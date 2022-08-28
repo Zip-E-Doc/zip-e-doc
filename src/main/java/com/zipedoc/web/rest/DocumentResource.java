@@ -2,6 +2,7 @@ package com.zipedoc.web.rest;
 
 import com.zipedoc.domain.Document;
 import com.zipedoc.repository.DocumentRepository;
+import com.zipedoc.service.DocumentService;
 import com.zipedoc.web.rest.errors.BadRequestAlertException;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -34,9 +35,11 @@ public class DocumentResource {
     private String applicationName;
 
     private final DocumentRepository documentRepository;
+    private final DocumentService documentService;
 
-    public DocumentResource(DocumentRepository documentRepository) {
+    public DocumentResource(DocumentRepository documentRepository, DocumentService documentService) {
         this.documentRepository = documentRepository;
+        this.documentService = documentService;
     }
 
     /**
@@ -52,7 +55,7 @@ public class DocumentResource {
         if (document.getId() != null) {
             throw new BadRequestAlertException("A new document cannot already have an ID", ENTITY_NAME, "idexists");
         }
-        Document result = documentRepository.save(document);
+        Document result = documentService.addUserAssociationPostDocument(document);
         return ResponseEntity
             .created(new URI("/api/documents/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(applicationName, false, ENTITY_NAME, result.getId().toString()))

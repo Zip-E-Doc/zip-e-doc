@@ -18,7 +18,6 @@ function documentview() {
   return (
     <div>
       <DocumentList selectionHandler={handleDocumentSelection} />
-
       <EditorApp documentData={selectedDocument} />
     </div>
   );
