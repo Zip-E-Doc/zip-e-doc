@@ -2,38 +2,37 @@ package com.zipedoc.repository;
 
 import com.amazonaws.AmazonClientException;
 import com.amazonaws.AmazonServiceException;
+import com.amazonaws.auth.BasicAWSCredentials;
+import com.amazonaws.regions.Regions;
+import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.AmazonS3Client;
+import com.amazonaws.services.s3.AmazonS3ClientBuilder;
 import com.amazonaws.services.s3.model.GetObjectRequest;
 import com.amazonaws.services.s3.model.S3Object;
 import com.amazonaws.services.s3.model.S3ObjectSummary;
 import com.zipedoc.service.DocumentService;
-import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
+import com.zipedoc.service.dto.DocumentDataDTO;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Repository;
 
+@Repository
 public class S3Repository {
 
-    private final AmazonS3Client s3Client;
+    private final AmazonS3 s3Client;
     private final String bucketName = "zcw-cohort8n3dot1";
     private final Logger logger = LoggerFactory.getLogger(DocumentService.class);
 
-    //        credentials = new BasicAWSCredentials(
-    //                "<AWS accesskey>",
-    //                "<AWS secretkey>"
-    //        );
-
-    public S3Repository(AmazonS3Client s3Client) {
-        this.s3Client = s3Client;
+    public S3Repository() {
+        this.s3Client = AmazonS3ClientBuilder.standard().withRegion(Regions.US_EAST_1).build();
     }
 
-    public String uploadObject(String key, String data) {
-        s3Client.putObject(bucketName, key, new File(data));
-        return String.valueOf(s3Client.getUrl(bucketName, key));
+    public String uploadObject(DocumentDataDTO data) {
+        s3Client.putObject(bucketName, data.getKey(), data.getData());
+        return String.valueOf(s3Client.getUrl(bucketName, data.getKey()));
     }
 
     public List<S3ObjectSummary> listObjects() {

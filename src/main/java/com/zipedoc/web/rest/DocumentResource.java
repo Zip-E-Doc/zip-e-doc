@@ -4,7 +4,9 @@ import com.zipedoc.domain.Document;
 import com.zipedoc.repository.DocumentRepository;
 import com.zipedoc.repository.S3Repository;
 import com.zipedoc.service.DocumentService;
+import com.zipedoc.service.dto.DocumentDataDTO;
 import com.zipedoc.web.rest.errors.BadRequestAlertException;
+import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;
@@ -66,8 +68,8 @@ public class DocumentResource {
     }
 
     @PostMapping("/documents/data")
-    public ResponseEntity<String> uploadDocumentData(@RequestBody String key, @RequestBody String data) {
-        return new ResponseEntity<>(s3Repository.uploadObject(key, data), HttpStatus.CREATED);
+    public ResponseEntity<String> uploadDocumentData(@RequestBody DocumentDataDTO data) {
+        return new ResponseEntity<>(s3Repository.uploadObject(data), HttpStatus.CREATED);
     }
 
     /**
