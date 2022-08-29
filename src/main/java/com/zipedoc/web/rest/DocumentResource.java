@@ -2,6 +2,7 @@ package com.zipedoc.web.rest;
 
 import com.zipedoc.domain.Document;
 import com.zipedoc.repository.DocumentRepository;
+import com.zipedoc.repository.S3Repository;
 import com.zipedoc.service.DocumentService;
 import com.zipedoc.web.rest.errors.BadRequestAlertException;
 import java.net.URI;
@@ -36,10 +37,12 @@ public class DocumentResource {
 
     private final DocumentRepository documentRepository;
     private final DocumentService documentService;
+    private final S3Repository s3Repository;
 
-    public DocumentResource(DocumentRepository documentRepository, DocumentService documentService) {
+    public DocumentResource(DocumentRepository documentRepository, DocumentService documentService, S3Repository s3Repository) {
         this.documentRepository = documentRepository;
         this.documentService = documentService;
+        this.s3Repository = s3Repository;
     }
 
     /**
@@ -60,6 +63,11 @@ public class DocumentResource {
             .created(new URI("/api/documents/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(applicationName, false, ENTITY_NAME, result.getId().toString()))
             .body(result);
+    }
+
+    @PostMapping("/documents/data")
+    public ResponseEntity<String> uploadDocumentData(@RequestBody String key, @RequestBody String data) {
+        return new ResponseEntity<>(s3Repository.uploadObject(key, data), HttpStatus.CREATED);
     }
 
     /**
