@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from './axios.js';
 
 function DocumentList({ selectionHandler }) {
-  const [documents, setDocuments] = React.useState([]);
+  const [documents, setDocuments] = useState([]);
   const [config, setConfig] = useState(null);
 
   useEffect(() => {
@@ -37,7 +37,6 @@ function DocumentList({ selectionHandler }) {
   async function handleCreateDocument(e) {
     e.preventDefault();
     console.log(e.target[0].value);
-    console.log(config);
     let newDocument = await axios
       .post(
         '/documents',
@@ -55,13 +54,12 @@ function DocumentList({ selectionHandler }) {
 
   return (
     <div>
-      <table>
-        <thead>
+      <table className="table table-striped table-hover">
+        <thead className="table-dark">
           <tr>
-            <td>Document Title</td>
-
-            <td>Last Modified</td>
-            <td>Owner</td>
+            <th>Document Title</th>
+            <th>Last Modified</th>
+            <th>Owner</th>
           </tr>
         </thead>
         <tbody>
@@ -75,7 +73,7 @@ function DocumentList({ selectionHandler }) {
             ))}
         </tbody>
       </table>
-      <button>New Document</button>
+      <button className="btn btn-outline-info">New Document</button>
       <form onSubmit={handleCreateDocument}>
         <input className="form-control me-2" name="newDocumentName" placeholder="document name" />
         <button type="submit" className="btn btn-outline-info">
