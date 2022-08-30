@@ -22,14 +22,30 @@ function DocumentList({ selectionHandler }) {
     fetchData();
   }, []);
 
+  async function fetchDocuments() {
+    const documentList = await axios.get('/documents/user', config).then(response => {
+      console.log(response.data);
+      setDocuments(response.data);
+    });
+  }
+
+  async function addFileToBucket(data) {
+    let newDocument = await axios
+      .post(
+        '/documents/data',
+        {
+          key: data.s3key,
+          data: "You can't see this",
+        },
+        config
+      )
+      .then(response => {
+        console.log(response.data);
+      });
+  }
+
   useEffect(() => {
     if (config) {
-      async function fetchDocuments() {
-        const documentList = await axios.get('/documents/user', config).then(response => {
-          console.log(response.data);
-          setDocuments(response.data);
-        });
-      }
       fetchDocuments();
     }
   }, [config]);
@@ -49,7 +65,11 @@ function DocumentList({ selectionHandler }) {
         },
         config
       )
-      .then(response => console.log(response));
+      .then(response => {
+        selectionHandler(response.data);
+        fetchDocuments();
+        addFileToBucket(response.data);
+      });
   }
 
   return (
