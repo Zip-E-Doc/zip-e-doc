@@ -22,14 +22,15 @@ function DocumentList({ selectionHandler }) {
     fetchData();
   }, []);
 
+  async function fetchDocuments() {
+    const documentList = await axios.get('/documents/user', config).then(response => {
+      console.log(response.data);
+      setDocuments(response.data);
+    });
+  }
+
   useEffect(() => {
     if (config) {
-      async function fetchDocuments() {
-        const documentList = await axios.get('/documents/user', config).then(response => {
-          console.log(response.data);
-          setDocuments(response.data);
-        });
-      }
       fetchDocuments();
     }
   }, [config]);
@@ -49,7 +50,10 @@ function DocumentList({ selectionHandler }) {
         },
         config
       )
-      .then(response => console.log(response));
+      .then(response => {
+        selectionHandler(response.data);
+        fetchDocuments();
+      });
   }
 
   return (
