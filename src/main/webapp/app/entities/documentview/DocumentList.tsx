@@ -29,6 +29,21 @@ function DocumentList({ selectionHandler }) {
     });
   }
 
+  async function addFileToBucket(data) {
+    let newDocument = await axios
+      .post(
+        '/documents/data',
+        {
+          key: data.s3key,
+          data: "You can't see this",
+        },
+        config
+      )
+      .then(response => {
+        console.log(response.data);
+      });
+  }
+
   useEffect(() => {
     if (config) {
       fetchDocuments();
@@ -53,6 +68,7 @@ function DocumentList({ selectionHandler }) {
       .then(response => {
         selectionHandler(response.data);
         fetchDocuments();
+        addFileToBucket(response.data);
       });
   }
 
