@@ -198,6 +198,14 @@ public class DocumentResource {
     }
 
     /**
+     * GET all object from bucket with key as the param
+     */
+    @GetMapping("/documents/data")
+    public ResponseEntity<String> downloadDocumentData(@RequestBody String key) {
+        return new ResponseEntity<>(s3Repository.getS3ObjectContentAsString(key), HttpStatus.CREATED);
+    }
+
+    /**
      * {@code DELETE  /documents/:id} : delete the "id" document.
      *
      * @param id the id of the document to delete.
