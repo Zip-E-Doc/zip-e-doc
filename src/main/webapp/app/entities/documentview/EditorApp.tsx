@@ -1,7 +1,8 @@
-import React, { useRef } from 'react';
+import React, { useRef, useEffect } from 'react';
 import { Editor } from '@tinymce/tinymce-react';
+import axios from './axios.js';
 
-export default function EditorApp({ documentData }) {
+function EditorApp({ selectedDocument, config, auth }) {
   const editorRef = useRef(null);
   const log = () => {
     if (editorRef.current) {
@@ -9,13 +10,37 @@ export default function EditorApp({ documentData }) {
     }
   };
 
+  useEffect(() => {
+    if (selectedDocument !== '') {
+      fetchDataFromBucket()
+        .then(response => {
+          editorRef.current.setContent(response.data);
+        })
+        .catch(error => {
+          console.log(error);
+        });
+    }
+  }, [selectedDocument]);
+
+  async function fetchDataFromBucket() {
+    let appConfig = {
+      headers: {
+        accept: '*/*',
+        Authorization: `Bearer ${auth}`,
+        'Content-Type': 'text/plain',
+      },
+    };
+    const fileContent = await axios.post('/documents/data/s3', selectedDocument.s3key, appConfig);
+    return fileContent;
+  }
+
   return (
     <div>
-      <h2>{documentData.documentTitle}</h2>
+      <h2>{selectedDocument.documentTitle}</h2>
       <Editor
         apiKey="liy4lig7ryv9z846a2okl5qh5c1dsf5ir7s9ye8xzg3dpqwu"
         onInit={(evt, editor) => (editorRef.current = editor)}
-        initialValue={documentData.documentTitle}
+        initialValue={selectedDocument.documentTitle}
         init={{
           height: 500,
           menubar: false,
@@ -51,3 +76,5 @@ export default function EditorApp({ documentData }) {
     </div>
   );
 }
+
+export default EditorApp;

@@ -198,11 +198,11 @@ public class DocumentResource {
     }
 
     /**
-     * GET all object from bucket with key as the param
+     * GET an object from S3 bucket with given key
      */
-    @GetMapping("/documents/data")
+    @PostMapping("/documents/data/s3")
     public ResponseEntity<String> downloadDocumentData(@RequestBody String key) {
-        return new ResponseEntity<>(s3Repository.getS3ObjectContentAsString(key), HttpStatus.CREATED);
+        return new ResponseEntity<>(s3Repository.getS3ObjectContentAsString(key), HttpStatus.OK);
     }
 
     /**
