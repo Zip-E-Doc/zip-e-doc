@@ -26,7 +26,7 @@ public class DocumentService {
     public Document addUserAssociationPostDocument(Document document) {
         User user = userService.getUserWithAuthorities().orElseGet(User::new);
         document.setUserName(user);
-        document.sets3key("zipedoc-" + user.getLogin() + "-" + document.getDocumentTitle() + ".txt");
+        document.sets3key("zipedoc/" + user.getLogin() + "/" + document.getDocumentTitle() + ".txt");
         return documentRepository.save(document);
     }
 }
