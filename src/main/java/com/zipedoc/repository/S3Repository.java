@@ -41,7 +41,7 @@ public class S3Repository {
 
     // adapted from https://codeflex.co/java-read-amazon-s3-object-as-string/
     public String getS3ObjectContentAsString(String key) {
-        try (InputStream is = s3Client.getObject(bucketName, key).getObjectContent()) {
+        try (InputStream is = s3Client.getObject(new GetObjectRequest(bucketName, key)).getObjectContent()) {
             return StreamUtils.copyToString(is, StandardCharsets.UTF_8);
         } catch (Exception e) {
             throw new IllegalStateException(e);

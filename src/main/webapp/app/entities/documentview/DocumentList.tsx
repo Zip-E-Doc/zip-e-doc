@@ -1,32 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import axios from './axios.js';
 
-function DocumentList({ selectionHandler }) {
+function DocumentList({ selectionHandler, config }) {
   const [documents, setDocuments] = useState([]);
-  const [config, setConfig] = useState(null);
-
-  useEffect(() => {
-    async function fetchData() {
-      const auth = await axios({
-        method: 'post',
-        url: `http://localhost:9000/api/authenticate`,
-        data: {
-          password: 'admin',
-          username: 'admin',
-        },
-      }).then(response => {
-        setConfig({ headers: { accept: '*/*', Authorization: `Bearer ${response.data.id_token}` } });
-      });
-      return config;
-    }
-    fetchData();
-  }, []);
 
   async function fetchDocuments() {
     const documentList = await axios.get('/documents/user', config).then(response => {
-      console.log(response.data);
       setDocuments(response.data);
     });
+    return documentList;
   }
 
   async function addFileToBucket(data) {
@@ -35,13 +17,14 @@ function DocumentList({ selectionHandler }) {
         '/documents/data',
         {
           key: data.s3key,
-          data: "You can't see this",
+          data: "<p>You can't see this</p>",
         },
         config
       )
       .then(response => {
         console.log(response.data);
       });
+    return newDocument;
   }
 
   useEffect(() => {
