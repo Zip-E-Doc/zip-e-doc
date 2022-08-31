@@ -34,12 +34,17 @@ function EditorApp({ selectedDocument, config, auth }) {
     return fileContent;
   }
 
+  const handleTextEditorChange = content => {
+    console.log('Content was updated:', content);
+  };
+
   return (
     <div>
       <h2>{selectedDocument.documentTitle}</h2>
       <Editor
         apiKey="liy4lig7ryv9z846a2okl5qh5c1dsf5ir7s9ye8xzg3dpqwu"
         onInit={(evt, editor) => (editorRef.current = editor)}
+        // onChange={handleTextEditorChange}
         initialValue={selectedDocument.documentTitle}
         init={{
           height: 500,
@@ -70,6 +75,11 @@ function EditorApp({ selectedDocument, config, auth }) {
             'alignright alignjustify | bullist numlist outdent indent | ' +
             'removeformat | help',
           content_style: 'body { font-family:Helvetica,Arial,sans-serif; font-size:14px }',
+          setup: function (ed) {
+            ed.on('keyup change paste undo redo', function (e) {
+              console.log('Editor contents was modified. Contents: ' + ed.getContent());
+            });
+          },
         }}
       />
       <button onClick={log}>Log editor content</button>
