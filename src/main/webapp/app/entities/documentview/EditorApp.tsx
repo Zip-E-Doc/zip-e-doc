@@ -1,6 +1,7 @@
-import React, { useRef, useEffect } from 'react';
+import React, { useRef, useEffect, useMemo } from 'react';
 import { Editor } from '@tinymce/tinymce-react';
 import axios from './axios.js';
+import { debounce } from 'lodash';
 
 function EditorApp({ selectedDocument, config, auth }) {
   const editorRef = useRef(null);
@@ -34,9 +35,29 @@ function EditorApp({ selectedDocument, config, auth }) {
     return fileContent;
   }
 
+  async function updateDataInBucket(content) {
+    console.log(auth);
+    let updatedDocument = await axios
+      .post(
+        '/documents/data',
+        {
+          key: selectedDocument.s3key,
+          data: content,
+        },
+        config
+      )
+      .then(response => {
+        console.log(response.data);
+      });
+    return updatedDocument;
+  }
+
   const handleTextEditorChange = content => {
-    console.log('Content was updated:', content);
+    updateDataInBucket(content);
+    // console.log('Content was updated:', content);
   };
+
+  const debouncedHandleTextEditorChange = useMemo(() => debounce(handleTextEditorChange, 500), []);
 
   return (
     <div>
@@ -44,7 +65,6 @@ function EditorApp({ selectedDocument, config, auth }) {
       <Editor
         apiKey="liy4lig7ryv9z846a2okl5qh5c1dsf5ir7s9ye8xzg3dpqwu"
         onInit={(evt, editor) => (editorRef.current = editor)}
-        // onChange={handleTextEditorChange}
         initialValue={selectedDocument.documentTitle}
         init={{
           height: 500,
@@ -77,7 +97,7 @@ function EditorApp({ selectedDocument, config, auth }) {
           content_style: 'body { font-family:Helvetica,Arial,sans-serif; font-size:14px }',
           setup: function (ed) {
             ed.on('keyup change paste undo redo', function (e) {
-              console.log('Editor contents was modified. Contents: ' + ed.getContent());
+              debouncedHandleTextEditorChange(ed.getContent());
             });
           },
         }}
