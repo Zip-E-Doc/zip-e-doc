@@ -148,6 +148,7 @@ public class Document implements Serializable, Comparable<Document> {
             "}";
     }
 
+    //Documents being sorted in descending order by modified date; if same modified date, then by Id descending
     @Override
     public int compareTo(Document o) {
         int diff = o.getModifiedDate().compareTo(this.getModifiedDate());

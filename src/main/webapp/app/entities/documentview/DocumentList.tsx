@@ -10,6 +10,8 @@ function DocumentList({ selectionHandler, config }) {
     setShowCreateDocumentInput(!showCreateDocumentInput);
   };
 
+  //Retrieving documentList from database and sorting by modifiedDate descending
+  //then by Id descending
   async function fetchDocuments() {
     const documentList = await axios.get('/documents/user', config).then(response => {
       setDocuments(response.data);
@@ -33,12 +35,14 @@ function DocumentList({ selectionHandler, config }) {
     return newDocument;
   }
 
+  //Called when DocumentList loads and when config is updated
   useEffect(() => {
     if (config) {
       fetchDocuments();
     }
   }, [config]);
 
+  //Called when DocumentList loads and when newFileData is updated
   useEffect(() => {
     if (newFileData) {
       addFileToBucket(newFileData);
