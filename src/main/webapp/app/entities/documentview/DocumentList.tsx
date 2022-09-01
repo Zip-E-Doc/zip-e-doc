@@ -3,6 +3,12 @@ import axios from './axios.js';
 
 function DocumentList({ selectionHandler, config }) {
   const [documents, setDocuments] = useState([]);
+  const [newFileData, setNewFileData] = useState(null);
+  const [showCreateDocumentInput, setShowCreateDocumentInput] = useState(false);
+
+  const handleCreateDocumentInput = () => {
+    setShowCreateDocumentInput(!showCreateDocumentInput);
+  };
 
   async function fetchDocuments() {
     const documentList = await axios.get('/documents/user', config).then(response => {
@@ -17,7 +23,7 @@ function DocumentList({ selectionHandler, config }) {
         '/documents/data',
         {
           key: data.s3key,
-          data: "<p>You can't see this</p>",
+          data: '',
         },
         config
       )
@@ -33,7 +39,23 @@ function DocumentList({ selectionHandler, config }) {
     }
   }, [config]);
 
+  useEffect(() => {
+    if (newFileData) {
+      addFileToBucket(newFileData);
+    }
+  }, [newFileData]);
+
+  const getBearerToken = () => {
+    var authToken = localStorage.getItem('jhi-authenticationToken') || sessionStorage.getItem('jhi-authenticationToken');
+    if (authToken) {
+      authToken = JSON.parse(authToken);
+      return { headers: { accept: '*/*', Authorization: `Bearer ${authToken}` } };
+    }
+    return null;
+  };
+
   async function handleCreateDocument(e) {
+    const newConfig = getBearerToken();
     e.preventDefault();
     console.log(e.target[0].value);
     let newDocument = await axios
@@ -46,17 +68,33 @@ function DocumentList({ selectionHandler, config }) {
           s3key: e.target[0].value,
           userName: null,
         },
-        config
+        newConfig
       )
       .then(response => {
         selectionHandler(response.data);
+        setNewFileData(response.data);
         fetchDocuments();
-        addFileToBucket(response.data);
       });
   }
 
   return (
-    <div>
+    <div className="document-list">
+      {!showCreateDocumentInput && (
+        <div className="flex flex-end">
+          <button className="btn btn-outline-info" onClick={handleCreateDocumentInput}>
+            New Document
+          </button>
+        </div>
+      )}
+      {showCreateDocumentInput && (
+        <form onSubmit={handleCreateDocument}>
+          <input className="form-control me-2" name="newDocumentName" placeholder="document name" />
+          <button type="submit" className="btn btn-outline-info">
+            Create Document
+          </button>
+        </form>
+      )}
+
       <table className="table table-striped table-hover">
         <thead className="table-dark">
           <tr>
@@ -76,13 +114,6 @@ function DocumentList({ selectionHandler, config }) {
             ))}
         </tbody>
       </table>
-      <button className="btn btn-outline-info">New Document</button>
-      <form onSubmit={handleCreateDocument}>
-        <input className="form-control me-2" name="newDocumentName" placeholder="document name" />
-        <button type="submit" className="btn btn-outline-info">
-          Create Document
-        </button>
-      </form>
     </div>
   );
 }

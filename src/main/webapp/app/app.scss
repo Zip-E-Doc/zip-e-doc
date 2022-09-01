@@ -311,3 +311,29 @@ http://stackoverflow.com/questions/23436430/bootstrap-3-input-group-100-width */
 }
 
 /* jhipster-needle-scss-add-main JHipster will add new css style */
+.document-list button {
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.document-list input {
+  width: 300px;
+}
+
+.document-list form {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 1.5rem;
+}
+
+.flex {
+  display: flex;
+}
+
+.flex-end {
+  justify-content: flex-end;
+}
+
+.flex-space-between {
+  justify-content: space-between;
+}

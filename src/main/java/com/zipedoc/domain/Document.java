@@ -12,7 +12,7 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
 @Entity
 @Table(name = "document")
 @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-public class Document implements Serializable {
+public class Document implements Serializable, Comparable<Document> {
 
     private static final long serialVersionUID = 1L;
 
@@ -146,5 +146,11 @@ public class Document implements Serializable {
             ", modifiedDate='" + getModifiedDate() + "'" +
             ", s3key='" + gets3key() + "'" +
             "}";
+    }
+
+    @Override
+    public int compareTo(Document o) {
+        int diff = o.getModifiedDate().compareTo(this.getModifiedDate());
+        return diff == 0 ? o.getId().compareTo(this.getId()) : diff;
     }
 }

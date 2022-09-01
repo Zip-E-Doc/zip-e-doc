@@ -1,15 +1,11 @@
-import React, { useRef, useEffect, useMemo } from 'react';
+import React, { useRef, useEffect, useMemo, useState } from 'react';
 import { Editor } from '@tinymce/tinymce-react';
 import axios from './axios.js';
 import { debounce } from 'lodash';
 
 function EditorApp({ selectedDocument, config, auth }) {
+  const [editorContent, setEditorContent] = useState('');
   const editorRef = useRef(null);
-  const log = () => {
-    if (editorRef.current) {
-      console.log(editorRef.current.getContent());
-    }
-  };
 
   useEffect(() => {
     if (selectedDocument !== '') {
@@ -35,8 +31,7 @@ function EditorApp({ selectedDocument, config, auth }) {
     return fileContent;
   }
 
-  async function updateDataInBucket(content) {
-    console.log(auth);
+  async function updateData(content) {
     let updatedDocument = await axios
       .post(
         '/documents/data',
@@ -52,20 +47,30 @@ function EditorApp({ selectedDocument, config, auth }) {
     return updatedDocument;
   }
 
-  const handleTextEditorChange = content => {
-    updateDataInBucket(content);
-    // console.log('Content was updated:', content);
+  useEffect(() => {
+    if (editorContent !== '') {
+      updateData(editorContent);
+    }
+  }, [editorContent]);
+
+  const updateDataInBucket = content => {
+    setEditorContent(content);
   };
 
-  const debouncedHandleTextEditorChange = useMemo(() => debounce(handleTextEditorChange, 500), []);
+  const debouncedHandleTextEditorChange = useMemo(() => debounce(updateDataInBucket, 500), []);
 
   return (
     <div>
-      <h2>{selectedDocument.documentTitle}</h2>
+      <nav className="flex flex-space-between">
+        <h2>{selectedDocument.documentTitle}</h2>
+        <a href="./document/view">
+          <button className="btn btn-outline-info">Back to Document List</button>
+        </a>
+      </nav>
       <Editor
         apiKey="liy4lig7ryv9z846a2okl5qh5c1dsf5ir7s9ye8xzg3dpqwu"
         onInit={(evt, editor) => (editorRef.current = editor)}
-        initialValue={selectedDocument.documentTitle}
+        // initialValue={selectedDocument.documentTitle}
         init={{
           height: 500,
           menubar: false,
@@ -102,7 +107,6 @@ function EditorApp({ selectedDocument, config, auth }) {
           },
         }}
       />
-      <button onClick={log}>Log editor content</button>
     </div>
   );
 }
