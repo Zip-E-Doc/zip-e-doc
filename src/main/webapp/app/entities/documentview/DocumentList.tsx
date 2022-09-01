@@ -106,7 +106,7 @@ function DocumentList({ selectionHandler, config }) {
         <tbody>
           {documents &&
             documents.map(documentRow => (
-              <tr key={documentRow.id} onClick={() => selectionHandler(documentRow)}>
+              <tr key={documentRow.id} onClick={() => selectionHandler(documentRow)} className="row-clickable">
                 <td>{documentRow.documentTitle}</td>
                 <td>{documentRow.modifiedDate}</td>
                 <td>{documentRow.userName.login}</td>
