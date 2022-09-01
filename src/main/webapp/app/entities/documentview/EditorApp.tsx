@@ -6,11 +6,6 @@ import { debounce } from 'lodash';
 function EditorApp({ selectedDocument, config, auth }) {
   const [editorContent, setEditorContent] = useState('');
   const editorRef = useRef(null);
-  const log = () => {
-    if (editorRef.current) {
-      console.log(editorRef.current.getContent());
-    }
-  };
 
   useEffect(() => {
     if (selectedDocument !== '') {
@@ -66,7 +61,12 @@ function EditorApp({ selectedDocument, config, auth }) {
 
   return (
     <div>
-      <h2>{selectedDocument.documentTitle}</h2>
+      <nav className="flex flex-space-between">
+        <h2>{selectedDocument.documentTitle}</h2>
+        <a href="./document/view">
+          <button className="btn btn-outline-info">Back to Document List</button>
+        </a>
+      </nav>
       <Editor
         apiKey="liy4lig7ryv9z846a2okl5qh5c1dsf5ir7s9ye8xzg3dpqwu"
         onInit={(evt, editor) => (editorRef.current = editor)}
@@ -107,7 +107,6 @@ function EditorApp({ selectedDocument, config, auth }) {
           },
         }}
       />
-      <button onClick={log}>Log editor content</button>
     </div>
   );
 }

@@ -3,6 +3,9 @@ package com.zipedoc.service;
 import com.zipedoc.domain.Document;
 import com.zipedoc.domain.User;
 import com.zipedoc.repository.DocumentRepository;
+import java.util.Collections;
+import java.util.List;
+import javax.print.Doc;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -28,5 +31,11 @@ public class DocumentService {
         document.setUserName(user);
         document.sets3key("zipedoc/" + user.getLogin() + "/" + document.getDocumentTitle() + ".txt");
         return documentRepository.save(document);
+    }
+
+    public List<Document> sortDocumentsByModifiedDateMostRecentFirst() {
+        List<Document> documentList = documentRepository.findByUserNameIsCurrentUser();
+        Collections.sort(documentList);
+        return documentList;
     }
 }
