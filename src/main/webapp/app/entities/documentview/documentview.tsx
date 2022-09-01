@@ -7,6 +7,7 @@ function documentview() {
   const [selectedDocument, setSelectedDocument] = useState('');
   const [config, setConfig] = useState(null);
   const [auth, setAuth] = useState(null);
+
   const handleDocumentSelection = data => {
     setSelectedDocument(data);
   };
@@ -27,7 +28,7 @@ function documentview() {
       setConfig({ headers: { accept: '*/*', Authorization: `Bearer ${response.data.id_token}` } });
       setAuth(response.data.id_token);
     });
-    return config;
+    return auth;
   }
 
   return (

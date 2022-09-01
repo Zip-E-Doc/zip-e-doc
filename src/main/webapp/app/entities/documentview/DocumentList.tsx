@@ -3,6 +3,7 @@ import axios from './axios.js';
 
 function DocumentList({ selectionHandler, config }) {
   const [documents, setDocuments] = useState([]);
+  const [newFileData, setNewFileData] = useState(null);
 
   async function fetchDocuments() {
     const documentList = await axios.get('/documents/user', config).then(response => {
@@ -33,6 +34,12 @@ function DocumentList({ selectionHandler, config }) {
     }
   }, [config]);
 
+  useEffect(() => {
+    if (newFileData) {
+      addFileToBucket(newFileData);
+    }
+  }, [newFileData]);
+
   async function handleCreateDocument(e) {
     e.preventDefault();
     console.log(e.target[0].value);
@@ -50,8 +57,8 @@ function DocumentList({ selectionHandler, config }) {
       )
       .then(response => {
         selectionHandler(response.data);
+        setNewFileData(response.data);
         fetchDocuments();
-        addFileToBucket(response.data);
       });
   }
 
