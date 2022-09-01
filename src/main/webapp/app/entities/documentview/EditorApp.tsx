@@ -5,6 +5,8 @@ import { debounce } from 'lodash';
 
 function EditorApp({ selectedDocument, config, auth }) {
   const [editorContent, setEditorContent] = useState('');
+  const [initialContent, setInitialContent] = useState('');
+  const [saveStatus, setSaveStatus] = useState('');
   const editorRef = useRef(null);
 
   useEffect(() => {
@@ -22,8 +24,8 @@ function EditorApp({ selectedDocument, config, auth }) {
         return fileContent.data;
       }
       fetchDataFromBucket().then(response => {
-        console.log('response', response);
-        editorRef.current.setContent(response);
+        setInitialContent(response);
+        // editorRef.current.setContent(response);
       });
     }
   }, [selectedDocument]);
@@ -47,8 +49,25 @@ function EditorApp({ selectedDocument, config, auth }) {
   useEffect(() => {
     if (editorContent !== '') {
       updateData(editorContent);
+      handleSaveStatus();
     }
   }, [editorContent]);
+
+  const handleSaveStatus = () => {
+    setSaveStatus('Saving.');
+    setTimeout(() => {
+      setSaveStatus('Saving..');
+      setTimeout(() => {
+        setSaveStatus('Saving...');
+        setTimeout(() => {
+          setSaveStatus('Saved.');
+          setTimeout(() => {
+            setSaveStatus('');
+          }, 3000);
+        }, 450);
+      }, 450);
+    }, 450);
+  };
 
   const updateDataInBucket = content => {
     setEditorContent(content);
@@ -60,6 +79,7 @@ function EditorApp({ selectedDocument, config, auth }) {
     <div className="gutters">
       <nav className="flex flex-space-between">
         {selectedDocument && <h2>{selectedDocument.documentTitle}</h2>}
+        <p className="save-status">{saveStatus}</p>
         <a href="./document/view">
           <button className="btn btn-outline-info">Back to Document List</button>
         </a>
@@ -67,6 +87,7 @@ function EditorApp({ selectedDocument, config, auth }) {
       <Editor
         apiKey="liy4lig7ryv9z846a2okl5qh5c1dsf5ir7s9ye8xzg3dpqwu"
         onInit={(evt, editor) => (editorRef.current = editor)}
+        initialValue={initialContent}
         init={{
           height: 500,
           menubar: false,
