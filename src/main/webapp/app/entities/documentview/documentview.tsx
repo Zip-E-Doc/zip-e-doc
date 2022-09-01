@@ -29,7 +29,7 @@ function documentview() {
   return (
     <div>
       {!selectedDocument && <DocumentList selectionHandler={handleDocumentSelection} config={config} />}
-      {selectedDocument && <EditorApp selectedDocument={selectedDocument} config={config} auth={auth} />}
+      <EditorApp selectedDocument={selectedDocument} config={config} auth={auth} />
     </div>
   );
 }

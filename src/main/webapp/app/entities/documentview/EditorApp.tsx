@@ -8,28 +8,25 @@ function EditorApp({ selectedDocument, config, auth }) {
   const editorRef = useRef(null);
 
   useEffect(() => {
-    if (selectedDocument !== '') {
-      fetchDataFromBucket()
-        .then(response => {
-          editorRef.current.setContent(response.data);
-        })
-        .catch(error => {
-          console.log(error);
-        });
+    if (selectedDocument) {
+      async function fetchDataFromBucket() {
+        let appConfig = {
+          headers: {
+            accept: '*/*',
+            Authorization: `Bearer ${auth}`,
+            'Content-Type': 'text/plain',
+          },
+        };
+        const fileContent = await axios.post('/documents/data/s3', selectedDocument.s3key, appConfig);
+
+        return fileContent.data;
+      }
+      fetchDataFromBucket().then(response => {
+        console.log('response', response);
+        editorRef.current.setContent(response);
+      });
     }
   }, [selectedDocument]);
-
-  async function fetchDataFromBucket() {
-    let appConfig = {
-      headers: {
-        accept: '*/*',
-        Authorization: `Bearer ${auth}`,
-        'Content-Type': 'text/plain',
-      },
-    };
-    const fileContent = await axios.post('/documents/data/s3', selectedDocument.s3key, appConfig);
-    return fileContent;
-  }
 
   async function updateData(content) {
     let updatedDocument = await axios
@@ -60,9 +57,9 @@ function EditorApp({ selectedDocument, config, auth }) {
   const debouncedHandleTextEditorChange = useMemo(() => debounce(updateDataInBucket, 500), []);
 
   return (
-    <div>
+    <div className="gutters">
       <nav className="flex flex-space-between">
-        <h2>{selectedDocument.documentTitle}</h2>
+        {selectedDocument && <h2>{selectedDocument.documentTitle}</h2>}
         <a href="./document/view">
           <button className="btn btn-outline-info">Back to Document List</button>
         </a>
@@ -70,7 +67,6 @@ function EditorApp({ selectedDocument, config, auth }) {
       <Editor
         apiKey="liy4lig7ryv9z846a2okl5qh5c1dsf5ir7s9ye8xzg3dpqwu"
         onInit={(evt, editor) => (editorRef.current = editor)}
-        // initialValue={selectedDocument.documentTitle}
         init={{
           height: 500,
           menubar: false,
