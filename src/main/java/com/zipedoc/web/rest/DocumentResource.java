@@ -194,7 +194,6 @@ public class DocumentResource {
      */
     @GetMapping("/documents/user")
     public ResponseEntity<List<Document>> getDocumentsByCurrentUser() {
-        //        return new ResponseEntity<>(documentRepository.findByUserNameIsCurrentUser(), HttpStatus.OK);
         return new ResponseEntity<>(documentService.sortDocumentsByModifiedDateMostRecentFirst(), HttpStatus.OK);
     }
 

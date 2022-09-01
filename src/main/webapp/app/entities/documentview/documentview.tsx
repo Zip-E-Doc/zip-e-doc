@@ -11,6 +11,7 @@ function documentview() {
     setSelectedDocument(data);
   };
 
+  //useEffect gets authToken and sets state for config and auth
   useEffect(() => {
     const getBearerToken = () => {
       var authToken = localStorage.getItem('jhi-authenticationToken') || sessionStorage.getItem('jhi-authenticationToken');
