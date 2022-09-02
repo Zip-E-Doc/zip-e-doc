@@ -2,6 +2,9 @@ import React, { useRef, useEffect, useMemo, useState } from 'react';
 import { Editor } from '@tinymce/tinymce-react';
 import axios from './axios.js';
 import { debounce } from 'lodash';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faArrowsRotate, faC, faCloudArrowDown } from '@fortawesome/free-solid-svg-icons';
+import { IconProp } from '@fortawesome/fontawesome-svg-core';
 
 function EditorApp({ selectedDocument, config, auth }) {
   const [editorContent, setEditorContent] = useState('');
@@ -79,7 +82,11 @@ function EditorApp({ selectedDocument, config, auth }) {
     <div className="gutters">
       <nav className="flex flex-space-between">
         {selectedDocument && <h2>{selectedDocument.documentTitle}</h2>}
-        <p className="save-status">{saveStatus}</p>
+        <div className="flex save-status">
+          {saveStatus !== 'Saved.' && saveStatus && <FontAwesomeIcon icon={faArrowsRotate as IconProp} className="flex-icon" />}
+          {saveStatus === 'Saved.' && <FontAwesomeIcon icon={faCloudArrowDown as IconProp} className="flex-icon" />}
+          <p>{saveStatus}</p>
+        </div>
         <a href="./document/view">
           <button className="btn btn-outline-info">Back to Document List</button>
         </a>
