@@ -3,7 +3,7 @@ import { Editor } from '@tinymce/tinymce-react';
 import axios from './axios.js';
 import { debounce } from 'lodash';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faArrowsRotate, faC, faCloudArrowDown } from '@fortawesome/free-solid-svg-icons';
+import { faArrowsRotate, faCloudArrowDown } from '@fortawesome/free-solid-svg-icons';
 import { IconProp } from '@fortawesome/fontawesome-svg-core';
 
 function EditorApp({ selectedDocument, config, auth }) {
@@ -97,7 +97,7 @@ function EditorApp({ selectedDocument, config, auth }) {
         initialValue={initialContent}
         init={{
           height: 500,
-          menubar: false,
+          // menubar: false,
           plugins: [
             'advlist',
             'autolink',
@@ -118,11 +118,14 @@ function EditorApp({ selectedDocument, config, auth }) {
             'help',
             'wordcount',
           ],
+          menubar: 'file edit insert view format table tools',
+          removed_menuitems: 'newdocument',
           toolbar:
             'undo redo | blocks | ' +
             'bold italic forecolor | alignleft aligncenter ' +
             'alignright alignjustify | bullist numlist outdent indent | ' +
             'removeformat | help',
+          fontsize_formats: '8pt 10pt 12pt 14pt 18pt 24pt 36pt',
           content_style: 'body { font-family:Helvetica,Arial,sans-serif; font-size:14px }',
           setup: function (ed) {
             ed.on('keyup change paste undo redo', function (e) {
