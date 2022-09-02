@@ -311,6 +311,11 @@ http://stackoverflow.com/questions/23436430/bootstrap-3-input-group-100-width */
 }
 
 /* jhipster-needle-scss-add-main JHipster will add new css style */
+.gutters {
+  width: 80%;
+  margin: 0 auto;
+}
+
 .document-list button {
   margin-top: 0.5rem;
   margin-bottom: 0.5rem;
@@ -338,6 +343,19 @@ http://stackoverflow.com/questions/23436430/bootstrap-3-input-group-100-width */
   justify-content: space-between;
 }
 
+.flex button {
+  margin-bottom: 1rem;
+}
+
 .row-clickable:hover {
   cursor: pointer;
+}
+
+.save-status {
+  align-self: flex-end;
+}
+
+.flex-icon {
+  padding-top: 0.25rem;
+  padding-right: 0.5rem;
 }

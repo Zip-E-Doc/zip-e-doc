@@ -2,34 +2,36 @@ import React, { useRef, useEffect, useMemo, useState } from 'react';
 import { Editor } from '@tinymce/tinymce-react';
 import axios from './axios.js';
 import { debounce } from 'lodash';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faArrowsRotate, faC, faCloudArrowDown } from '@fortawesome/free-solid-svg-icons';
+import { IconProp } from '@fortawesome/fontawesome-svg-core';
 
 function EditorApp({ selectedDocument, config, auth }) {
   const [editorContent, setEditorContent] = useState('');
+  const [initialContent, setInitialContent] = useState('');
+  const [saveStatus, setSaveStatus] = useState('');
   const editorRef = useRef(null);
 
   useEffect(() => {
-    if (selectedDocument !== '') {
-      fetchDataFromBucket()
-        .then(response => {
-          editorRef.current.setContent(response.data);
-        })
-        .catch(error => {
-          console.log(error);
-        });
+    if (selectedDocument) {
+      async function fetchDataFromBucket() {
+        let appConfig = {
+          headers: {
+            accept: '*/*',
+            Authorization: `Bearer ${auth}`,
+            'Content-Type': 'text/plain',
+          },
+        };
+        const fileContent = await axios.post('/documents/data/s3', selectedDocument.s3key, appConfig);
+
+        return fileContent.data;
+      }
+      fetchDataFromBucket().then(response => {
+        setInitialContent(response);
+        // editorRef.current.setContent(response);
+      });
     }
   }, [selectedDocument]);
-
-  async function fetchDataFromBucket() {
-    let appConfig = {
-      headers: {
-        accept: '*/*',
-        Authorization: `Bearer ${auth}`,
-        'Content-Type': 'text/plain',
-      },
-    };
-    const fileContent = await axios.post('/documents/data/s3', selectedDocument.s3key, appConfig);
-    return fileContent;
-  }
 
   async function updateData(content) {
     let updatedDocument = await axios
@@ -50,8 +52,25 @@ function EditorApp({ selectedDocument, config, auth }) {
   useEffect(() => {
     if (editorContent !== '') {
       updateData(editorContent);
+      handleSaveStatus();
     }
   }, [editorContent]);
+
+  const handleSaveStatus = () => {
+    setSaveStatus('Saving.');
+    setTimeout(() => {
+      setSaveStatus('Saving..');
+      setTimeout(() => {
+        setSaveStatus('Saving...');
+        setTimeout(() => {
+          setSaveStatus('Saved.');
+          setTimeout(() => {
+            setSaveStatus('');
+          }, 3000);
+        }, 450);
+      }, 450);
+    }, 450);
+  };
 
   const updateDataInBucket = content => {
     setEditorContent(content);
@@ -60,9 +79,14 @@ function EditorApp({ selectedDocument, config, auth }) {
   const debouncedHandleTextEditorChange = useMemo(() => debounce(updateDataInBucket, 500), []);
 
   return (
-    <div>
+    <div className="gutters">
       <nav className="flex flex-space-between">
-        <h2>{selectedDocument.documentTitle}</h2>
+        {selectedDocument && <h2>{selectedDocument.documentTitle}</h2>}
+        <div className="flex save-status">
+          {saveStatus !== 'Saved.' && saveStatus && <FontAwesomeIcon icon={faArrowsRotate as IconProp} className="flex-icon" />}
+          {saveStatus === 'Saved.' && <FontAwesomeIcon icon={faCloudArrowDown as IconProp} className="flex-icon" />}
+          <p>{saveStatus}</p>
+        </div>
         <a href="./document/view">
           <button className="btn btn-outline-info">Back to Document List</button>
         </a>
@@ -70,7 +94,7 @@ function EditorApp({ selectedDocument, config, auth }) {
       <Editor
         apiKey="liy4lig7ryv9z846a2okl5qh5c1dsf5ir7s9ye8xzg3dpqwu"
         onInit={(evt, editor) => (editorRef.current = editor)}
-        // initialValue={selectedDocument.documentTitle}
+        initialValue={initialContent}
         init={{
           height: 500,
           menubar: false,

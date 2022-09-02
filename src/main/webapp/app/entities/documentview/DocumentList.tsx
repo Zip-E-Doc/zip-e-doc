@@ -82,7 +82,7 @@ function DocumentList({ selectionHandler, config }) {
   }
 
   return (
-    <div className="document-list">
+    <div className="document-list gutters">
       {!showCreateDocumentInput && (
         <div className="flex flex-end">
           <button className="btn btn-outline-info" onClick={handleCreateDocumentInput}>
