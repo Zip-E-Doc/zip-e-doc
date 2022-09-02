@@ -97,7 +97,6 @@ function EditorApp({ selectedDocument, config, auth }) {
         initialValue={initialContent}
         init={{
           height: 500,
-          // menubar: false,
           plugins: [
             'advlist',
             'autolink',
@@ -121,7 +120,7 @@ function EditorApp({ selectedDocument, config, auth }) {
           menubar: 'file edit insert view format table tools',
           removed_menuitems: 'newdocument',
           toolbar:
-            'undo redo | blocks | ' +
+            'undo redo | blocks fontselect formatselect fontsizeselect | ' +
             'bold italic forecolor | alignleft aligncenter ' +
             'alignright alignjustify | bullist numlist outdent indent | ' +
             'removeformat | help',
