@@ -28,7 +28,6 @@ function EditorApp({ selectedDocument, config, auth }) {
       }
       fetchDataFromBucket().then(response => {
         setInitialContent(response);
-        // editorRef.current.setContent(response);
       });
     }
   }, [selectedDocument]);
