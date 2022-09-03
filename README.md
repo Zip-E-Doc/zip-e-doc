@@ -1,6 +1,6 @@
 # Zip-E-Doc
 
-Zip-E-Doc is a web based text editor that allows you to create, edit, save, share, and delete text documents. Using a cloud based document editor allows multiple users to contribute and make changes at the same time. It is similar to a traditional word processor, but with the added benefit of being accessible from any internet connected device, making it a convenient tool for those who work remotely or on the go.
+Zip-E-Doc is a web based text editor that allows you to create, edit, save, share, and delete text documents. Using a cloud based document editor has the added benefit of being accessible from any internet connected device, making it a convenient tool for those who work remotely or on the go.
 
 ## Github Links
 
