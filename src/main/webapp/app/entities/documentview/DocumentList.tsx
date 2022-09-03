@@ -19,6 +19,7 @@ function DocumentList({ selectionHandler, config }) {
     return documentList;
   }
 
+  //Posts document to S3 bucket with unique key and blank data
   async function addFileToBucket(data) {
     let newDocument = await axios
       .post(
@@ -58,10 +59,10 @@ function DocumentList({ selectionHandler, config }) {
     return null;
   };
 
+  //Sets initial values for document then passes new document data to editor
   async function handleCreateDocument(e) {
     const newConfig = getBearerToken();
     e.preventDefault();
-    console.log(e.target[0].value);
     let newDocument = await axios
       .post(
         '/documents',
@@ -77,7 +78,7 @@ function DocumentList({ selectionHandler, config }) {
       .then(response => {
         selectionHandler(response.data);
         setNewFileData(response.data);
-        fetchDocuments();
+        //fetchDocuments();
       });
   }
 
