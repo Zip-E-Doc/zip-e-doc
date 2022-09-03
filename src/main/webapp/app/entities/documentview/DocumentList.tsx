@@ -86,8 +86,9 @@ function DocumentList({ selectionHandler, config }) {
     <div className="document-list gutters">
       {!showCreateDocumentInput && (
         <div className="flex flex-end">
+          <button className="btn btn-outline-info btn-template">New From Template</button>
           <button className="btn btn-outline-info" onClick={handleCreateDocumentInput}>
-            New Document
+            New Blank Document
           </button>
         </div>
       )}
@@ -99,6 +100,27 @@ function DocumentList({ selectionHandler, config }) {
           </button>
         </form>
       )}
+
+      <div className="flex">
+        <div className="card pointer p-2">
+          <img src="../../content/images/sample.png" className="card-img-top" alt="..." />
+          <div className="card-body-custom">
+            <h5 className="card-title">Letter</h5>
+          </div>
+        </div>
+        <div className="card pointer p-2">
+          <img src="../../content/images/sample.png" className="card-img-top" alt="..." />
+          <div className="card-body-custom">
+            <h5 className="card-title">Resume</h5>
+          </div>
+        </div>
+        <div className="card pointer p-2">
+          <img src="../../content/images/sample.png" className="card-img-top" alt="..." />
+          <div className="card-body-custom">
+            <h5 className="card-title">Meeting Notes</h5>
+          </div>
+        </div>
+      </div>
 
       <table className="table table-striped table-hover">
         <thead className="table-dark">
