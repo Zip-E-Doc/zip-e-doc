@@ -335,6 +335,11 @@ http://stackoverflow.com/questions/23436430/bootstrap-3-input-group-100-width */
   cursor: pointer;
 }
 
+.selected {
+  border-color: rgb(88, 88, 255);
+  // border-width: 3px;
+}
+
 .flex {
   display: flex;
 }

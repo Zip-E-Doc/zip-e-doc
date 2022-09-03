@@ -1,13 +1,19 @@
 import React, { useState, useEffect } from 'react';
 import axios from './axios.js';
 
-function DocumentList({ selectionHandler, config }) {
+function DocumentList({ selectionHandler, handleTemplateValue, config }) {
   const [documents, setDocuments] = useState([]);
   const [newFileData, setNewFileData] = useState(null);
   const [showCreateDocumentInput, setShowCreateDocumentInput] = useState(false);
+  const [showTemplates, setShowTemplates] = useState(false);
+  const [templateSelected, setTemplateSelected] = useState('');
 
   const handleCreateDocumentInput = () => {
     setShowCreateDocumentInput(!showCreateDocumentInput);
+  };
+
+  const handleShowTemplates = () => {
+    setShowTemplates(!showTemplates);
   };
 
   //Retrieving documentList from database and sorting by modifiedDate descending
@@ -77,8 +83,10 @@ function DocumentList({ selectionHandler, config }) {
       )
       .then(response => {
         selectionHandler(response.data);
+        if (templateSelected !== '') {
+          handleTemplateValue(templateSelected);
+        }
         setNewFileData(response.data);
-        //fetchDocuments();
       });
   }
 
@@ -86,7 +94,15 @@ function DocumentList({ selectionHandler, config }) {
     <div className="document-list gutters">
       {!showCreateDocumentInput && (
         <div className="flex flex-end">
-          <button className="btn btn-outline-info btn-template">New From Template</button>
+          <button
+            className="btn btn-outline-info btn-template"
+            onClick={() => {
+              handleCreateDocumentInput();
+              handleShowTemplates();
+            }}
+          >
+            New From Template
+          </button>
           <button className="btn btn-outline-info" onClick={handleCreateDocumentInput}>
             New Blank Document
           </button>
@@ -101,26 +117,37 @@ function DocumentList({ selectionHandler, config }) {
         </form>
       )}
 
-      <div className="flex">
-        <div className="card pointer p-2">
-          <img src="../../content/images/sample.png" className="card-img-top" alt="..." />
-          <div className="card-body-custom">
-            <h5 className="card-title">Letter</h5>
+      {showTemplates && (
+        <div className="flex">
+          <div
+            className={`card pointer p-2 ${templateSelected === 'Letter' ? 'selected' : ''}`}
+            onClick={() => (templateSelected === 'Letter' ? setTemplateSelected('') : setTemplateSelected('Letter'))}
+          >
+            <img src="../../content/images/sample.png" className="card-img-top" alt="..." />
+            <div className="card-body-custom">
+              <h5 className="card-title">Letter</h5>
+            </div>
+          </div>
+          <div
+            className={`card pointer p-2 ${templateSelected === 'Resume' ? 'selected' : ''}`}
+            onClick={() => (templateSelected === 'Resume' ? setTemplateSelected('') : setTemplateSelected('Resume'))}
+          >
+            <img src="../../content/images/sample.png" className="card-img-top" alt="..." />
+            <div className="card-body-custom">
+              <h5 className="card-title">Resume</h5>
+            </div>
+          </div>
+          <div
+            className={`card pointer p-2 ${templateSelected === 'Meeting' ? 'selected' : ''}`}
+            onClick={() => (templateSelected === 'Meeting' ? setTemplateSelected('') : setTemplateSelected('Meeting'))}
+          >
+            <img src="../../content/images/sample.png" className="card-img-top" alt="..." />
+            <div className="card-body-custom">
+              <h5 className="card-title">Meeting Notes</h5>
+            </div>
           </div>
         </div>
-        <div className="card pointer p-2">
-          <img src="../../content/images/sample.png" className="card-img-top" alt="..." />
-          <div className="card-body-custom">
-            <h5 className="card-title">Resume</h5>
-          </div>
-        </div>
-        <div className="card pointer p-2">
-          <img src="../../content/images/sample.png" className="card-img-top" alt="..." />
-          <div className="card-body-custom">
-            <h5 className="card-title">Meeting Notes</h5>
-          </div>
-        </div>
-      </div>
+      )}
 
       <table className="table table-striped table-hover">
         <thead className="table-dark">

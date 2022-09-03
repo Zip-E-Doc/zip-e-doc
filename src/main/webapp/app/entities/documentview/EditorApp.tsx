@@ -6,14 +6,14 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowsRotate, faCloudArrowDown } from '@fortawesome/free-solid-svg-icons';
 import { IconProp } from '@fortawesome/fontawesome-svg-core';
 
-function EditorApp({ selectedDocument, config, auth }) {
+function EditorApp({ selectedDocument, templateValue, config, auth }) {
   const [editorContent, setEditorContent] = useState('');
   const [initialContent, setInitialContent] = useState('');
   const [saveStatus, setSaveStatus] = useState('');
   const editorRef = useRef(null);
 
   useEffect(() => {
-    if (selectedDocument) {
+    if (selectedDocument && templateValue === '') {
       async function fetchDataFromBucket() {
         let appConfig = {
           headers: {
@@ -29,8 +29,10 @@ function EditorApp({ selectedDocument, config, auth }) {
       fetchDataFromBucket().then(response => {
         setInitialContent(response);
       });
+    } else if (templateValue !== '') {
+      setInitialContent(templateValue);
     }
-  }, [selectedDocument]);
+  }, [selectedDocument, templateValue]);
 
   async function updateData(content) {
     let updatedDocument = await axios
