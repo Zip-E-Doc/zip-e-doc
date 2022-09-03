@@ -50,6 +50,8 @@ function EditorApp({ selectedDocument, templateValue, config, auth }) {
     return updatedDocument;
   }
 
+  //Called when editorContent is changed and when
+  //Component is initilaized
   useEffect(() => {
     if (editorContent !== '') {
       updateData(editorContent);
@@ -77,6 +79,7 @@ function EditorApp({ selectedDocument, templateValue, config, auth }) {
     setEditorContent(content);
   };
 
+  //Debouncing limits the number of calls to the RestEndpoint
   const debouncedHandleTextEditorChange = useMemo(() => debounce(updateDataInBucket, 500), []);
 
   return (
