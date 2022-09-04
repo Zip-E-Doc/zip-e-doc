@@ -1,10 +1,15 @@
 package com.zipedoc.service;
 
 import com.zipedoc.domain.Document;
+import com.zipedoc.domain.SharedUser;
 import com.zipedoc.domain.User;
 import com.zipedoc.repository.DocumentRepository;
+import com.zipedoc.repository.SharedUserRepository;
+import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import javax.print.Doc;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -21,9 +26,12 @@ public class DocumentService {
 
     private final UserService userService;
 
-    public DocumentService(DocumentRepository documentRepository, UserService userService) {
+    private final SharedUserRepository sharedUserRepository;
+
+    public DocumentService(DocumentRepository documentRepository, UserService userService, SharedUserRepository sharedUserRepository) {
         this.documentRepository = documentRepository;
         this.userService = userService;
+        this.sharedUserRepository = sharedUserRepository;
     }
 
     public Document addUserAssociationPostDocument(Document document) {
@@ -33,10 +41,19 @@ public class DocumentService {
         return documentRepository.save(document);
     }
 
+    // originally returned documents that the logged in user owns
+    // appended method to return documents that the logged in user owns and has read only access
+    // could be refactored into multiple methods to separate read and read/write access
     public List<Document> sortDocumentsByModifiedDateMostRecentFirst() {
-        List<Document> documentList = documentRepository.findByUserNameIsCurrentUser();
-        // go through sharedusers and add to documentList if logged in user has access
-        // might also want to convert documentlist to a set to remove duplicates
+        User user = userService.getUserWithAuthorities().orElseGet(User::new);
+        Set<Document> documentSet = new HashSet<>(documentRepository.findByUserNameIsCurrentUser());
+        List<SharedUser> sharedUserList = sharedUserRepository.findAll();
+        for (SharedUser sharedUser : sharedUserList) {
+            if (sharedUser.getUserName().equals(user.getLogin())) {
+                documentSet.add(sharedUser.getTitle());
+            }
+        }
+        List<Document> documentList = new ArrayList<>(documentSet);
         Collections.sort(documentList);
         return documentList;
     }
