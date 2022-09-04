@@ -35,6 +35,8 @@ public class DocumentService {
 
     public List<Document> sortDocumentsByModifiedDateMostRecentFirst() {
         List<Document> documentList = documentRepository.findByUserNameIsCurrentUser();
+        // go through sharedusers and add to documentList if logged in user has access
+        // might also want to convert documentlist to a set to remove duplicates
         Collections.sort(documentList);
         return documentList;
     }

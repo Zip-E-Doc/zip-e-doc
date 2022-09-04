@@ -5,14 +5,21 @@ import { debounce } from 'lodash';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowsRotate, faCloudArrowDown } from '@fortawesome/free-solid-svg-icons';
 import { IconProp } from '@fortawesome/fontawesome-svg-core';
+import { useAppSelector } from 'app/config/store';
 
 function EditorApp({ selectedDocument, templateValue, config, auth }) {
   const [editorContent, setEditorContent] = useState('');
   const [initialContent, setInitialContent] = useState('');
   const [saveStatus, setSaveStatus] = useState('');
+  const [readOnly, setReadOnly] = useState(false);
   const editorRef = useRef(null);
+  const account = useAppSelector(state => state.authentication.account);
 
   useEffect(() => {
+    if (selectedDocument) {
+      // check if logged in user is the owner of the document
+      selectedDocument.userName.login !== account.login ? setReadOnly(true) : setReadOnly(false);
+    }
     if (selectedDocument && templateValue === '') {
       async function fetchDataFromBucket() {
         let appConfig = {
@@ -96,6 +103,7 @@ function EditorApp({ selectedDocument, templateValue, config, auth }) {
         </a>
       </nav>
       <Editor
+        disabled={readOnly}
         apiKey="liy4lig7ryv9z846a2okl5qh5c1dsf5ir7s9ye8xzg3dpqwu"
         onInit={(evt, editor) => (editorRef.current = editor)}
         initialValue={initialContent}
