@@ -14,6 +14,10 @@ import org.springframework.stereotype.Repository;
  */
 @Repository
 public interface SharedUserRepository extends JpaRepository<SharedUser, Long> {
+    // default List<SharedUser> findAllByUserNameIsSharedUser() {
+    //     return findAllByUserNameIsSharedUser();
+    // }
+
     default Optional<SharedUser> findOneWithEagerRelationships(Long id) {
         return this.findOneWithToOneRelationships(id);
     }
