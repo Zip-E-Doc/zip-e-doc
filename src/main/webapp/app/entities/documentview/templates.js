@@ -1,11 +1,10 @@
 const templates = {
-  letter: `<p style="text-align: center;"><span style="font-size: 36pt; font-family: georgia, palatino;">YOUR COMPANY</span></p>
-  <p style="text-align: center;"><img title="horizontal line" src="https://lh6.googleusercontent.com/X-tj2XDP4-utAcWyXazUteccMmJ9FESUH74a1NXZTNjl3WGKCjAH1nV43MKFndAbdVRIl-pRBo_yeZhd8gVBKu2pnE1xGnsE02x6VIDNvC-aIZD8FaI1yPhTVb_ULwJ7hMywRdvssubR3X3iSxaeq3iGwYKEi5RuEupcTiAs-FkY2STIjItimPGZ0A" width="400" height="4"></p>
-  <p style="text-align: right; line-height: 1;"><span style="font-family: verdana, geneva;">123 ORANGE STREET</span></p>
-  <p style="text-align: right; line-height: 1;"><span style="font-family: verdana, geneva;">YOUR CITY, ST 12345</span></p>
-  <p style="text-align: right; line-height: 1;"><span style="font-family: verdana, geneva;">(123) 456-7890</span></p>
-  <p style="text-align: right; line-height: 1;"><span style="font-family: verdana, geneva;">NO_REPLY@EXAMPLE.COM</span></p>
-  <p style="text-align: right; line-height: 1;"><span style="font-family: verdana, geneva;">September 04, 2022</span></p>
+  letter: `<p style="text-align: right;"><span style="font-size: 30pt; font-family: calibri;">ZIP CODE WILMINGTON</span></p>
+  <p style="line-height: 1; text-align: right;"><span style="font-family: calibri;">123 ORANGE STREET</span></p>
+  <p style="line-height: 1; text-align: right;"><span style="font-family: calibri;">YOUR CITY, ST 12345</span></p>
+  <p style="line-height: 1; text-align: right;"><span style="font-family: calibri;">(123) 456-7890</span></p>
+  <p style="line-height: 1; text-align: right;"><span style="font-family: calibri;">NO_REPLY@EXAMPLE.COM</span></p>
+  <p style="line-height: 1; text-align: right;"><span style="font-family: calibri;">September 04, 2022</span></p>
   <p><span style="font-family: calibri; font-size: 14pt;">Dear Amazing Company, </span></p>
   <p><span style="font-family: calibri; font-size: 14pt;">I am writing in regards to the entry level software development role that you have posted. I am very excited about the opportunity to join your team and contribute to your company&rsquo;s success. </span></p>
   <p><span style="font-family: calibri; font-size: 14pt;">I recently graduated from a 12 week bootcamp where I learned a variety of programming languages and software development techniques. I am confident that I have the skills and knowledge necessary to be a successful software developer. In addition, I am a quick learner and have a great deal of experience working in a team environment. </span></p>

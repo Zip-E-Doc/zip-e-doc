@@ -123,7 +123,7 @@ function DocumentList({ selectionHandler, handleTemplateValue, config }) {
             className={`card pointer p-2 ${templateSelected === 'Letter' ? 'selected' : ''}`}
             onClick={() => (templateSelected === 'Letter' ? setTemplateSelected('') : setTemplateSelected('Letter'))}
           >
-            <img src="../../content/images/sample.png" className="card-img-top" alt="..." />
+            <img src="../../content/images/letter.png" className="card-img-top" alt="..." />
             <div className="card-body-custom">
               <h5 className="card-title">Letter</h5>
             </div>
@@ -132,7 +132,7 @@ function DocumentList({ selectionHandler, handleTemplateValue, config }) {
             className={`card pointer p-2 ${templateSelected === 'Resume' ? 'selected' : ''}`}
             onClick={() => (templateSelected === 'Resume' ? setTemplateSelected('') : setTemplateSelected('Resume'))}
           >
-            <img src="../../content/images/sample.png" className="card-img-top" alt="..." />
+            <img src="../../content/images/resume.png" className="card-img-top" alt="..." />
             <div className="card-body-custom">
               <h5 className="card-title">Resume</h5>
             </div>
@@ -141,7 +141,7 @@ function DocumentList({ selectionHandler, handleTemplateValue, config }) {
             className={`card pointer p-2 ${templateSelected === 'Meeting' ? 'selected' : ''}`}
             onClick={() => (templateSelected === 'Meeting' ? setTemplateSelected('') : setTemplateSelected('Meeting'))}
           >
-            <img src="../../content/images/sample.png" className="card-img-top" alt="..." />
+            <img src="../../content/images/meeting.png" className="card-img-top" alt="..." />
             <div className="card-body-custom">
               <h5 className="card-title">Meeting Notes</h5>
             </div>
