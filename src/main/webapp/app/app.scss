@@ -331,6 +331,15 @@ http://stackoverflow.com/questions/23436430/bootstrap-3-input-group-100-width */
   margin-bottom: 1.5rem;
 }
 
+.pointer {
+  cursor: pointer;
+}
+
+.selected {
+  border-color: rgb(88, 88, 255);
+  // border-width: 3px;
+}
+
 .flex {
   display: flex;
 }
@@ -344,7 +353,7 @@ http://stackoverflow.com/questions/23436430/bootstrap-3-input-group-100-width */
 }
 
 .flex button {
-  margin-bottom: 1rem;
+  margin-bottom: 0.5rem;
 }
 
 .row-clickable:hover {
@@ -358,4 +367,26 @@ http://stackoverflow.com/questions/23436430/bootstrap-3-input-group-100-width */
 .flex-icon {
   padding-top: 0.25rem;
   padding-right: 0.5rem;
+}
+
+.card-body-custom {
+  flex: 1 1 auto;
+  padding: 1rem 1rem 0;
+  color: var(--bs-card-color);
+}
+
+.btn-template {
+  margin-right: 0.5rem;
+}
+
+.flex .card:first-of-type {
+  margin: 0.5rem 0.25rem 0.5rem 0;
+}
+
+.flex .card:nth-of-type(2) {
+  margin: 0.5rem 0.25rem 0.5rem 0.25rem;
+}
+
+.flex .card:last-of-type {
+  margin: 0.5rem 0 0.5rem 0.25rem;
 }
