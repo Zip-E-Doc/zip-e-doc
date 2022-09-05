@@ -99,10 +99,12 @@ function EditorApp({ selectedDocument, templateValue, config, auth }) {
           {saveStatus === 'Saved.' && <FontAwesomeIcon icon={faCloudArrowDown as IconProp} className="flex-icon" />}
           <p>{saveStatus}</p>
         </div>
-        {!readOnly && <SharedDocument config={config} selectedDocument={selectedDocument} />}
-        <a href="./document/view">
-          <button className="btn btn-outline-info">Back to Document List</button>
-        </a>
+        <div className="flex">
+          {!readOnly && <SharedDocument config={config} selectedDocument={selectedDocument} />}
+          <a href="./document/view">
+            <button className="btn btn-outline-info">Back to Document List</button>
+          </a>
+        </div>
       </nav>
       <Editor
         disabled={readOnly}
