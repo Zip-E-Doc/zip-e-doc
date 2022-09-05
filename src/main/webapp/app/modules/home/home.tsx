@@ -16,75 +16,57 @@ export const Home = () => {
         <span className="hipster rounded" />
       </Col>
       <Col md="9">
-        {/* <p className="lead">This is your homepage</p> */}
         {account?.login ? (
           <div>
-            <h1>Welcome, {account.login}</h1>
-            {/* <Alert color="success">You are logged in as user &quot;{account.login}&quot;.</Alert> */}
+            <div>
+              <h1>Welcome, {account.login}</h1>
+            </div>
+            <a href="./document/view">
+              <h2>Your Documents</h2>
+            </a>
           </div>
         ) : (
           <div>
+            <div>
+              <h1>Welcome to Zip-E-Doc</h1>
+            </div>
             <Alert color="warning">
-              If you want to
-              <span>&nbsp;</span>
               <Link to="/login" className="alert-link">
-                sign in
+                Sign-In here
               </Link>
-              , you can try the default accounts:
-              <br />- Administrator (login=&quot;admin&quot; and password=&quot;admin&quot;) <br />- User (login=&quot;user&quot; and
-              password=&quot;user&quot;).
+              &nbsp;to view your documents.
             </Alert>
-
-            <Alert color="warning">
+            {/* <Alert color="warning">
               You don&apos;t have an account yet?&nbsp;
               <Link to="/account/register" className="alert-link">
                 Register a new account
               </Link>
-            </Alert>
+            </Alert> */}
           </div>
         )}
-
-        <a href="./document/view">
-          <h2>Your Documents</h2>
-        </a>
-
-        {/* <p>If you have any question on JHipster:</p>
-
-        <ul>
-          <li>
-            <a href="https://www.jhipster.tech/" target="_blank" rel="noopener noreferrer">
-              JHipster homepage
-            </a>
-          </li>
-          <li>
-            <a href="https://stackoverflow.com/tags/jhipster/info" target="_blank" rel="noopener noreferrer">
-              JHipster on Stack Overflow
-            </a>
-          </li>
-          <li>
-            <a href="https://github.com/jhipster/generator-jhipster/issues?state=open" target="_blank" rel="noopener noreferrer">
-              JHipster bug tracker
-            </a>
-          </li>
-          <li>
-            <a href="https://gitter.im/jhipster/generator-jhipster" target="_blank" rel="noopener noreferrer">
-              JHipster public chat room
-            </a>
-          </li>
-          <li>
-            <a href="https://twitter.com/jhipster" target="_blank" rel="noopener noreferrer">
-              follow @jhipster on Twitter
-            </a>
-          </li>
-        </ul>
-
-        <p>
-          If you like JHipster, don&apos;t forget to give us a star on{' '}
-          <a href="https://github.com/jhipster/generator-jhipster" target="_blank" rel="noopener noreferrer">
-            GitHub
-          </a>
-          !
-        </p> */}
+        <div className="flex">
+          <div className="card" style={{ width: '18rem' }}>
+            <img src="../../content/images/letter.png" className="card-img-top" alt="..." />
+            <div className="card-body">
+              <h5 className="card-title">Auto-Save</h5>
+              <p className="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+            </div>
+          </div>
+          <div className="card" style={{ width: '18rem' }}>
+            <img src="../../content/images/letter.png" className="card-img-top" alt="..." />
+            <div className="card-body">
+              <h5 className="card-title">Templating</h5>
+              <p className="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+            </div>
+          </div>
+          <div className="card" style={{ width: '18rem' }}>
+            <img src="../../content/images/letter.png" className="card-img-top" alt="..." />
+            <div className="card-body">
+              <h5 className="card-title">Sharing</h5>
+              <p className="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+            </div>
+          </div>
+        </div>
       </Col>
     </Row>
   );

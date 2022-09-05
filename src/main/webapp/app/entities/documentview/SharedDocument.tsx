@@ -38,17 +38,19 @@ function SharedDocument({ config, selectedDocument }) {
     <div className="flex">
       {showUserDropdown && (
         <div className="custom-select">
-          <select onChange={handleSharedUserChange}>
+          <select onChange={handleSharedUserChange} className="btn btn-secondary">
             <option key="0">-- Share With --</option>
-            {otherUsers.map(user => (
-              <option key={user.id} value={user.login}>
-                {user.login}
-              </option>
-            ))}
+            {otherUsers
+              .filter(user => user.login !== selectedDocument.userName.login)
+              .map(user => (
+                <option key={user.id} value={user.login}>
+                  {user.login}
+                </option>
+              ))}
           </select>
         </div>
       )}
-      <button className="btn btn-outline-info" onClick={handleShare}>
+      <button className="btn btn-outline-info btn-share" onClick={handleShare}>
         <FontAwesomeIcon icon={faArrowUpRightFromSquare as IconProp} />
       </button>
     </div>
