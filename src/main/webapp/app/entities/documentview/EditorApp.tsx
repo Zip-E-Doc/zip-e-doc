@@ -6,6 +6,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowsRotate, faCloudArrowDown } from '@fortawesome/free-solid-svg-icons';
 import { IconProp } from '@fortawesome/fontawesome-svg-core';
 import { useAppSelector } from 'app/config/store';
+import SharedDocument from './SharedDocument';
 
 function EditorApp({ selectedDocument, templateValue, config, auth }) {
   const [editorContent, setEditorContent] = useState('');
@@ -98,6 +99,7 @@ function EditorApp({ selectedDocument, templateValue, config, auth }) {
           {saveStatus === 'Saved.' && <FontAwesomeIcon icon={faCloudArrowDown as IconProp} className="flex-icon" />}
           <p>{saveStatus}</p>
         </div>
+        <SharedDocument />
         <a href="./document/view">
           <button className="btn btn-outline-info">Back to Document List</button>
         </a>
