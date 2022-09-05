@@ -21,7 +21,7 @@ function SharedDocument({ config, selectedDocument }) {
 
   useEffect(() => {
     async function fetchUsers() {
-      const userList = await axios.get('/admin/users', config);
+      const userList = await axios.get('/users', config);
       return userList.data;
     }
     fetchUsers().then(response => {
