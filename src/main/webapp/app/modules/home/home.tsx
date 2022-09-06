@@ -46,21 +46,21 @@ export const Home = () => {
         )}
         <div className="flex">
           <div className="card" style={{ width: '18rem' }}>
-            <img src="../../content/images/letter.png" className="card-img-top" alt="..." />
+            <img src="../../content/images/autosave_gif_1.gif" className="card-img-top" alt="..." />
             <div className="card-body">
               <h5 className="card-title">Auto-Save</h5>
               <p className="card-text">Your documents are saved in less than a second and securely stored on AWS S3</p>
             </div>
           </div>
           <div className="card" style={{ width: '18rem' }}>
-            <img src="../../content/images/letter.png" className="card-img-top" alt="..." />
+            <img src="../../content/images/template_gif_1.gif" className="card-img-top" alt="..." />
             <div className="card-body">
               <h5 className="card-title">Templating</h5>
               <p className="card-text">Choose from multiple template styles to increase your productivity</p>
             </div>
           </div>
           <div className="card" style={{ width: '18rem' }}>
-            <img src="../../content/images/letter.png" className="card-img-top" alt="..." />
+            <img src="../../content/images/share_gif_1.gif" className="card-img-top" alt="..." />
             <div className="card-body">
               <h5 className="card-title">Sharing</h5>
               <p className="card-text">Give read-only access to your colleagues, peers, and family members</p>
