@@ -90,6 +90,8 @@ function EditorApp({ selectedDocument, templateValue, config, auth }) {
   //Debouncing limits the number of calls to the RestEndpoint
   const debouncedHandleTextEditorChange = useMemo(() => debounce(updateDataInBucket, 500), []);
 
+  // initial key liy4lig7ryv9z846a2okl5qh5c1dsf5ir7s9ye8xzg3dpqwu
+  // backup key 6kjmu0il8i8i3w2t4c64pnpqvp7r4hk5l8pg1maezk35gw0x
   return (
     <div className="gutters">
       <nav className="flex flex-space-between">
@@ -108,7 +110,7 @@ function EditorApp({ selectedDocument, templateValue, config, auth }) {
       </nav>
       <Editor
         disabled={readOnly}
-        apiKey="liy4lig7ryv9z846a2okl5qh5c1dsf5ir7s9ye8xzg3dpqwu"
+        apiKey="6kjmu0il8i8i3w2t4c64pnpqvp7r4hk5l8pg1maezk35gw0x"
         onInit={(evt, editor) => (editorRef.current = editor)}
         initialValue={initialContent}
         init={{
