@@ -7,6 +7,7 @@ function DocumentList({ selectionHandler, handleTemplateValue, config }) {
   const [showCreateDocumentInput, setShowCreateDocumentInput] = useState(false);
   const [showTemplates, setShowTemplates] = useState(false);
   const [templateSelected, setTemplateSelected] = useState('');
+  const [searchText, setSearchText] = useState('');
 
   const handleCreateDocumentInput = () => {
     setShowCreateDocumentInput(!showCreateDocumentInput);
@@ -14,6 +15,11 @@ function DocumentList({ selectionHandler, handleTemplateValue, config }) {
 
   const handleShowTemplates = () => {
     setShowTemplates(!showTemplates);
+  };
+
+  const handleSearchText = event => {
+    setSearchText(event.target.value);
+    console.log(event.target.value);
   };
 
   //Retrieving documentList from database and sorting by modifiedDate descending
@@ -92,30 +98,40 @@ function DocumentList({ selectionHandler, handleTemplateValue, config }) {
 
   return (
     <div className="document-list gutters">
-      {!showCreateDocumentInput && (
-        <div className="flex flex-end">
-          <button
-            className="btn btn-outline-info btn-template"
-            onClick={() => {
-              handleCreateDocumentInput();
-              handleShowTemplates();
-            }}
-          >
-            New From Template
-          </button>
-          <button className="btn btn-outline-info" onClick={handleCreateDocumentInput}>
-            New Blank Document
-          </button>
-        </div>
-      )}
-      {showCreateDocumentInput && (
-        <form onSubmit={handleCreateDocument}>
-          <input className="form-control me-2" name="newDocumentName" placeholder="document name" />
-          <button type="submit" className="btn btn-outline-info">
-            Create Document
-          </button>
-        </form>
-      )}
+      <div className="flex flex-space-between">
+        <input
+          type="text"
+          className="form-control input-form"
+          onChange={handleSearchText}
+          placeholder="Search"
+          aria-label="Search"
+          aria-describedby="basic-addon1"
+        />
+        {!showCreateDocumentInput && (
+          <div className="flex flex-end">
+            <button
+              className="btn btn-outline-info btn-template"
+              onClick={() => {
+                handleCreateDocumentInput();
+                handleShowTemplates();
+              }}
+            >
+              New From Template
+            </button>
+            <button className="btn btn-outline-info" onClick={handleCreateDocumentInput}>
+              New Blank Document
+            </button>
+          </div>
+        )}
+        {showCreateDocumentInput && (
+          <form onSubmit={handleCreateDocument}>
+            <input className="form-control input-form me-2" name="newDocumentName" placeholder="document name" />
+            <button type="submit" className="btn btn-outline-info">
+              Create Document
+            </button>
+          </form>
+        )}
+      </div>
 
       {showTemplates && (
         <div className="flex">
@@ -159,13 +175,15 @@ function DocumentList({ selectionHandler, handleTemplateValue, config }) {
         </thead>
         <tbody>
           {documents &&
-            documents.map(documentRow => (
-              <tr key={documentRow.id} onClick={() => selectionHandler(documentRow)} className="row-clickable">
-                <td>{documentRow.documentTitle}</td>
-                <td>{documentRow.modifiedDate}</td>
-                <td>{documentRow.userName.login}</td>
-              </tr>
-            ))}
+            documents
+              .filter(documentRow => documentRow.documentTitle.toLowerCase().includes(searchText.toLowerCase()))
+              .map(documentRow => (
+                <tr key={documentRow.id} onClick={() => selectionHandler(documentRow)} className="row-clickable">
+                  <td>{documentRow.documentTitle}</td>
+                  <td>{documentRow.modifiedDate}</td>
+                  <td>{documentRow.userName.login}</td>
+                </tr>
+              ))}
         </tbody>
       </table>
     </div>

@@ -14,12 +14,12 @@ const templates = {
   <p><span style="font-family: calibri;"><span style="font-size: 18.6667px;">[Your Name]</span></span></p>
   <p>&nbsp;</p>`,
   resume: `<p style="line-height: 1;"><span style="font-size: 36pt; font-family: helvetica;">Your Name</span></p>
-    <p><span style="font-size: 18pt; color: rgb(185, 106, 217);">Industrial Designer</span></p>
+    <p><span style="font-size: 18pt; color: rgb(185, 106, 217);">Data Scientist</span></p>
     <p>Your City, ST 12345</p>
     <p>(123) 456-7890</p>
     <p>no_reply@example.com</p>
     <h1><span style="color: rgb(155, 9, 185);">SUMMARY OF QUALIFICATIONS</span></h1>
-    <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.&nbsp;</p>
+    <p>A data scientist is a professional with the ability to turn data into insights that solve problems and improve businesses. They possess a strong foundation in computer science and statistics, and also have the ability to effectively communicate their findings to non-technical audiences. Data scientists are responsible for designing and developing algorithms to mine large data sets for valuable insights, as well as building data-driven models to improve business decision-making. In addition, they also play a key role in developing and testing new data-driven products and features.</p>
     <h1><span style="color: rgb(155, 9, 185);">SKILLS</span></h1>
     <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.&nbsp;</p>
     <h1 ><span style="color: rgb(155, 9, 185);">EXPERIENCE</span></h1>
