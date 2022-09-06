@@ -49,21 +49,21 @@ export const Home = () => {
             <img src="../../content/images/letter.png" className="card-img-top" alt="..." />
             <div className="card-body">
               <h5 className="card-title">Auto-Save</h5>
-              <p className="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+              <p className="card-text">Your documents are saved in less than a second and securely stored on AWS S3</p>
             </div>
           </div>
           <div className="card" style={{ width: '18rem' }}>
             <img src="../../content/images/letter.png" className="card-img-top" alt="..." />
             <div className="card-body">
               <h5 className="card-title">Templating</h5>
-              <p className="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+              <p className="card-text">Choose from multiple template styles to increase your productivity</p>
             </div>
           </div>
           <div className="card" style={{ width: '18rem' }}>
             <img src="../../content/images/letter.png" className="card-img-top" alt="..." />
             <div className="card-body">
               <h5 className="card-title">Sharing</h5>
-              <p className="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+              <p className="card-text">Give read-only access to your colleagues, peers, and family members</p>
             </div>
           </div>
         </div>
