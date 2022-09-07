@@ -3,6 +3,7 @@ import axios from './axios.js';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrashCan } from '@fortawesome/free-solid-svg-icons';
 import { Button } from 'reactstrap';
+import DeleteModal from './DeleteModal';
 
 function DocumentList({ selectionHandler, handleTemplateValue, config }) {
   const [documents, setDocuments] = useState([]);
@@ -11,6 +12,8 @@ function DocumentList({ selectionHandler, handleTemplateValue, config }) {
   const [showTemplates, setShowTemplates] = useState(false);
   const [templateSelected, setTemplateSelected] = useState('');
   const [searchText, setSearchText] = useState('');
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
+  const [documentForDeletion, setDocumentForDeletion] = useState(null);
 
   const handleCreateDocumentInput = () => {
     setShowCreateDocumentInput(!showCreateDocumentInput);
@@ -100,7 +103,20 @@ function DocumentList({ selectionHandler, handleTemplateValue, config }) {
   }
 
   const handleDeleteDocument = document => {
-    console.log('Delete Document');
+    setShowDeleteModal(true);
+    setDocumentForDeletion(document);
+  };
+
+  const handleCloseDeleteModal = () => {
+    setShowDeleteModal(false);
+  };
+
+  const deletionConfirmation = () => {
+    axios.delete(`/documents/${documentForDeletion.id}`, config);
+    handleCloseDeleteModal();
+    setTimeout(() => {
+      fetchDocuments();
+    }, 1200);
   };
 
   return (
@@ -205,6 +221,7 @@ function DocumentList({ selectionHandler, handleTemplateValue, config }) {
               ))}
         </tbody>
       </table>
+      <DeleteModal show={showDeleteModal} handleClose={handleCloseDeleteModal} deletionConfirmation={deletionConfirmation} />
     </div>
   );
 }
