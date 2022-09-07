@@ -6,9 +6,13 @@ import axios from './axios.js';
 
 function SharedDocument({ config, selectedDocument }) {
   const [showUserDropdown, setShowUserDropdown] = useState(false);
+  //Used to keep track of all users other than logged in user
   const [otherUsers, setOtherUsers] = useState([]);
+  //Selection from the dropdown menu
   const [selectedUser, setSelectedUser] = useState('');
 
+  //Creates the relationship for shared access on our back end
+  //Toggles dropdown visability for sharing
   const handleShare = () => {
     if (showUserDropdown && selectedUser !== '' && selectedUser !== '-- Share With --') {
       async function shareDocument() {
@@ -19,17 +23,18 @@ function SharedDocument({ config, selectedDocument }) {
     setShowUserDropdown(!showUserDropdown);
   };
 
+  //setOtherUsers with the result of get request
   useEffect(() => {
     async function fetchUsers() {
       const userList = await axios.get('/users', config);
       return userList.data;
     }
     fetchUsers().then(response => {
-      console.log(response);
       setOtherUsers(response);
     });
   }, []);
 
+  //setSelectedUser with choice from drop down
   const handleSharedUserChange = e => {
     setSelectedUser(e.target.value);
   };

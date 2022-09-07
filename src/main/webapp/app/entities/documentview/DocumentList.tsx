@@ -24,9 +24,9 @@ function DocumentList({ selectionHandler, handleTemplateValue, config }) {
     setShowTemplates(!showTemplates);
   };
 
+  //when text field changes, setSearchText with updated value
   const handleSearchText = event => {
     setSearchText(event.target.value);
-    console.log(event.target.value);
   };
 
   //Retrieving documentList from database and sorting by modifiedDate descending

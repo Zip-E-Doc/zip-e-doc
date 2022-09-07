@@ -10,10 +10,13 @@ import SharedDocument from './SharedDocument';
 
 function EditorApp({ selectedDocument, templateValue, config, auth }) {
   const [editorContent, setEditorContent] = useState('');
+  //content that the TinyMCE editor initializes to
   const [initialContent, setInitialContent] = useState('');
   const [saveStatus, setSaveStatus] = useState('');
+  //toggles TinyMCE editability
   const [readOnly, setReadOnly] = useState(false);
   const editorRef = useRef(null);
+  //assigned logged in account information to account
   const account = useAppSelector(state => state.authentication.account);
   const today = new Date().toISOString().substring(0, 10);
 
@@ -43,6 +46,7 @@ function EditorApp({ selectedDocument, templateValue, config, auth }) {
     }
   }, [selectedDocument, templateValue]);
 
+  //Rewrites bucket with updated editor content
   async function updateData(content) {
     let updatedDocument = await axios
       .post(
