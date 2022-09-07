@@ -316,7 +316,7 @@ http://stackoverflow.com/questions/23436430/bootstrap-3-input-group-100-width */
   margin: 0 auto;
 }
 
-.document-list button {
+.document-list-button {
   margin-top: 0.5rem;
   margin-bottom: 0.5rem;
 }
@@ -405,4 +405,26 @@ http://stackoverflow.com/questions/23436430/bootstrap-3-input-group-100-width */
   padding-bottom: 0;
   max-height: 2.4rem;
   margin-top: 0.5rem;
+}
+
+tr td:last-of-type {
+  padding-top: 0;
+  padding-bottom: 0;
+  min-width: 1.5rem;
+  max-width: 1.5rem;
+}
+
+th:last-of-type {
+  min-width: 1.5rem;
+  max-width: 1.5rem;
+}
+
+.reactstrap-button {
+  margin-top: 0.25rem;
+  padding: 0.125rem 0.6rem;
+  display: none;
+}
+
+.document-row:hover .reactstrap-button {
+  display: inline-block;
 }

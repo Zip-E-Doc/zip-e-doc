@@ -1,5 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import axios from './axios.js';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faTrashCan } from '@fortawesome/free-solid-svg-icons';
+import { Button } from 'reactstrap';
+import DeleteModal from './DeleteModal';
 
 function DocumentList({ selectionHandler, handleTemplateValue, config }) {
   const [documents, setDocuments] = useState([]);
@@ -8,6 +12,8 @@ function DocumentList({ selectionHandler, handleTemplateValue, config }) {
   const [showTemplates, setShowTemplates] = useState(false);
   const [templateSelected, setTemplateSelected] = useState('');
   const [searchText, setSearchText] = useState('');
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
+  const [documentForDeletion, setDocumentForDeletion] = useState(null);
 
   const handleCreateDocumentInput = () => {
     setShowCreateDocumentInput(!showCreateDocumentInput);
@@ -96,6 +102,23 @@ function DocumentList({ selectionHandler, handleTemplateValue, config }) {
       });
   }
 
+  const handleDeleteDocument = document => {
+    setShowDeleteModal(true);
+    setDocumentForDeletion(document);
+  };
+
+  const handleCloseDeleteModal = () => {
+    setShowDeleteModal(false);
+  };
+
+  const deletionConfirmation = () => {
+    axios.delete(`/documents/${documentForDeletion.id}`, config);
+    handleCloseDeleteModal();
+    setTimeout(() => {
+      fetchDocuments();
+    }, 1200);
+  };
+
   return (
     <div className="document-list gutters">
       <div className="flex flex-space-between">
@@ -110,7 +133,7 @@ function DocumentList({ selectionHandler, handleTemplateValue, config }) {
         {!showCreateDocumentInput && (
           <div className="flex flex-end">
             <button
-              className="btn btn-outline-info btn-template"
+              className="btn btn-outline-info btn-template document-list-button"
               onClick={() => {
                 handleCreateDocumentInput();
                 handleShowTemplates();
@@ -118,7 +141,7 @@ function DocumentList({ selectionHandler, handleTemplateValue, config }) {
             >
               New From Template
             </button>
-            <button className="btn btn-outline-info" onClick={handleCreateDocumentInput}>
+            <button className="btn btn-outline-info document-list-button" onClick={handleCreateDocumentInput}>
               New Blank Document
             </button>
           </div>
@@ -126,7 +149,7 @@ function DocumentList({ selectionHandler, handleTemplateValue, config }) {
         {showCreateDocumentInput && (
           <form onSubmit={handleCreateDocument}>
             <input className="form-control input-form me-2" name="newDocumentName" placeholder="document name" />
-            <button type="submit" className="btn btn-outline-info">
+            <button type="submit" className="btn btn-outline-info document-list-button">
               Create Document
             </button>
           </form>
@@ -171,6 +194,7 @@ function DocumentList({ selectionHandler, handleTemplateValue, config }) {
             <th>Document Title</th>
             <th>Last Modified</th>
             <th>Owner</th>
+            <th></th>
           </tr>
         </thead>
         <tbody>
@@ -179,14 +203,26 @@ function DocumentList({ selectionHandler, handleTemplateValue, config }) {
               //Lowercases and filters the document list based on text in the search input
               .filter(documentRow => documentRow.documentTitle.toLowerCase().includes(searchText.toLowerCase()))
               .map(documentRow => (
-                <tr key={documentRow.id} onClick={() => selectionHandler(documentRow)} className="row-clickable">
-                  <td>{documentRow.documentTitle}</td>
-                  <td>{documentRow.modifiedDate}</td>
-                  <td>{documentRow.userName.login}</td>
+                <tr key={documentRow.id} className="document-row">
+                  <td onClick={() => selectionHandler(documentRow)} className="row-clickable">
+                    {documentRow.documentTitle}
+                  </td>
+                  <td onClick={() => selectionHandler(documentRow)} className="row-clickable">
+                    {documentRow.modifiedDate}
+                  </td>
+                  <td onClick={() => selectionHandler(documentRow)} className="row-clickable">
+                    {documentRow.userName.login}
+                  </td>
+                  <td>
+                    <Button variant="outline-info" className="reactstrap-button">
+                      <FontAwesomeIcon icon={faTrashCan} onClick={() => handleDeleteDocument(documentRow)} size="sm" />
+                    </Button>
+                  </td>
                 </tr>
               ))}
         </tbody>
       </table>
+      <DeleteModal show={showDeleteModal} handleClose={handleCloseDeleteModal} deletionConfirmation={deletionConfirmation} />
     </div>
   );
 }
