@@ -47,34 +47,8 @@ public class S3Repository {
             throw new IllegalStateException(e);
         }
     }
-    //    public ByteArrayOutputStream downloadFile(String keyName) {
-    //        try {
-    //            S3Object s3object = s3Client.getObject(new GetObjectRequest(bucketName, keyName));
-    //
-    //            InputStream is = s3object.getObjectContent();
-    //            ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-    //            int len;
-    //            byte[] buffer = new byte[4096];
-    //            while ((len = is.read(buffer, 0, buffer.length)) != -1) {
-    //                outputStream.write(buffer, 0, len);
-    //            }
-    //
-    //            return outputStream;
-    //        } catch (IOException ioException) {
-    //            logger.error("IOException: " + ioException.getMessage());
-    //        } catch (AmazonServiceException serviceException) {
-    //            logger.info("AmazonServiceException Message:    " + serviceException.getMessage());
-    //            throw serviceException;
-    //        } catch (AmazonClientException clientException) {
-    //            logger.info("AmazonClientException Message: " + clientException.getMessage());
-    //            throw clientException;
-    //        }
-    //
-    //        return null;
-    //    }
-    //
-    //    //downloading an object
-    //    S3Object s3object = awsService.getObject(bucketName, "JavaTools/hello.txt");
-    //    S3ObjectInputStream inputStream = s3object.getObjectContent();
-    //        FileUtils.copyInputStreamToFile(inputStream, new File("/Users/user/Desktop/hello.txt"));
+
+    public void deleteObject(String key) {
+        s3Client.deleteObject(bucketName, key);
+    }
 }

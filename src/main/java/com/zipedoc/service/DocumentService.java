@@ -4,6 +4,7 @@ import com.zipedoc.domain.Document;
 import com.zipedoc.domain.SharedUser;
 import com.zipedoc.domain.User;
 import com.zipedoc.repository.DocumentRepository;
+import com.zipedoc.repository.S3Repository;
 import com.zipedoc.repository.SharedUserRepository;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -28,10 +29,18 @@ public class DocumentService {
 
     private final SharedUserRepository sharedUserRepository;
 
-    public DocumentService(DocumentRepository documentRepository, UserService userService, SharedUserRepository sharedUserRepository) {
+    private final S3Repository s3Repository;
+
+    public DocumentService(
+        DocumentRepository documentRepository,
+        UserService userService,
+        SharedUserRepository sharedUserRepository,
+        S3Repository s3Repository
+    ) {
         this.documentRepository = documentRepository;
         this.userService = userService;
         this.sharedUserRepository = sharedUserRepository;
+        this.s3Repository = s3Repository;
     }
 
     public Document addUserAssociationPostDocument(Document document) {
@@ -56,5 +65,16 @@ public class DocumentService {
         List<Document> documentList = new ArrayList<>(documentSet);
         Collections.sort(documentList);
         return documentList;
+    }
+
+    public void deleteDocumentById(Long id) {
+        Document doc = documentRepository.findById(id).get();
+        s3Repository.deleteObject(doc.gets3key());
+        sharedUserRepository
+            .findAll()
+            .stream()
+            .filter(sharedUser -> sharedUser.getTitle().equals(doc))
+            .forEach(sharedUser -> sharedUserRepository.delete(sharedUser));
+        documentRepository.deleteById(id);
     }
 }
