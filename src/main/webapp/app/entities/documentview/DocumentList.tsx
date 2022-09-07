@@ -17,9 +17,9 @@ function DocumentList({ selectionHandler, handleTemplateValue, config }) {
     setShowTemplates(!showTemplates);
   };
 
+  //when text field changes, setSearchText with updated value
   const handleSearchText = event => {
     setSearchText(event.target.value);
-    console.log(event.target.value);
   };
 
   //Retrieving documentList from database and sorting by modifiedDate descending
@@ -176,6 +176,7 @@ function DocumentList({ selectionHandler, handleTemplateValue, config }) {
         <tbody>
           {documents &&
             documents
+              //Lowercases and filters the document list based on text in the search input
               .filter(documentRow => documentRow.documentTitle.toLowerCase().includes(searchText.toLowerCase()))
               .map(documentRow => (
                 <tr key={documentRow.id} onClick={() => selectionHandler(documentRow)} className="row-clickable">
