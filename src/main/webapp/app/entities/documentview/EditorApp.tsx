@@ -69,6 +69,7 @@ function EditorApp({ selectedDocument, templateValue, config, auth }) {
     if (editorContent !== '') {
       updateData(editorContent);
       if (today !== selectedDocument.modifiedDate) {
+        console.log('modifiedDate updated');
         updateModifiedDate();
       }
       handleSaveStatus();
