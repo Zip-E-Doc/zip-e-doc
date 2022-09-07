@@ -15,6 +15,7 @@ function EditorApp({ selectedDocument, templateValue, config, auth }) {
   const [readOnly, setReadOnly] = useState(false);
   const editorRef = useRef(null);
   const account = useAppSelector(state => state.authentication.account);
+  const today = new Date().toISOString().substring(0, 10);
 
   useEffect(() => {
     if (selectedDocument) {
@@ -63,9 +64,17 @@ function EditorApp({ selectedDocument, templateValue, config, auth }) {
   useEffect(() => {
     if (editorContent !== '') {
       updateData(editorContent);
+      if (today !== selectedDocument.modifiedDate) {
+        updateModifiedDate();
+      }
       handleSaveStatus();
     }
   }, [editorContent]);
+
+  const updateModifiedDate = async () => {
+    selectedDocument.modifiedDate = today;
+    const response = await axios.put(`/documents/${selectedDocument.id}`, selectedDocument, config);
+  };
 
   const handleSaveStatus = () => {
     setSaveStatus('Saving.');

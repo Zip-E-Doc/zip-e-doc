@@ -63,7 +63,6 @@ const templates = {
     <p>&nbsp;</p>`,
   meeting: `<p dir="ltr"><span style="font-family: georgia, palatino, serif; color: rgb(126, 140, 141); font-size: 12pt;">YOUR COMPANY</span></p>
   <p dir="ltr"><span style="color: rgb(0, 0, 0); font-size: 24pt; font-family: georgia, palatino, serif;"><strong>MEETING NAME <span style="color: rgb(52, 73, 94);">09/24</span></strong></span></p>
-  <p dir="ltr"><span style="font-family: georgia, palatino, serif;"><img title="horizontal line" src="https://lh6.googleusercontent.com/Yju9Z0BHLMsbIfalQes7tPYg_t_jaIgqky1gd2sADXn9C13A3Gk7W-224uWF18nTNIBduLnptv1MzbQWDqtV-rZIKRumWpddqhbZcSw_-9wb1BfGgU_ARbRWFmMgPeaVTAzlOseCQ0f2mS9HxjuJY_gBQOn4yYy0Sb-In9lygYNq9FbPS0fsTg0ajw" width="624" height="5"></span></p>
   <p dir="ltr"><span style="font-family: georgia, palatino, serif; color: rgb(229, 27, 135);">24 SEPTEMBER 20XX / 1:30 PM / ROOM 924&nbsp;</span></p>
   <h1 dir="ltr"><span style="font-family: georgia, palatino, serif;">ATTENDEES</span></h1>
   <p dir="ltr"><span style="font-family: georgia, palatino, serif;">Morty Manager, Lou Librarian, Greta Groundskeeper</span></p>
