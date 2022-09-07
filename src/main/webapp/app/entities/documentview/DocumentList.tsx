@@ -14,6 +14,7 @@ function DocumentList({ selectionHandler, handleTemplateValue, config }) {
   const [searchText, setSearchText] = useState('');
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [documentForDeletion, setDocumentForDeletion] = useState(null);
+  const today = new Date().toISOString().substring(0, 10);
 
   const handleCreateDocumentInput = () => {
     setShowCreateDocumentInput(!showCreateDocumentInput);
@@ -119,6 +120,14 @@ function DocumentList({ selectionHandler, handleTemplateValue, config }) {
     }, 1200);
   };
 
+  function getDifferenceInDays(date1, date2) {
+    let newDate1 = new Date(date1);
+    let newDate2 = new Date(date2);
+    let difference = newDate1.getTime() - newDate2.getTime();
+    let TotalDays = Math.ceil(difference / (1000 * 3600 * 24));
+    return TotalDays;
+  }
+
   return (
     <div className="document-list gutters">
       <div className="flex flex-space-between">
@@ -188,8 +197,15 @@ function DocumentList({ selectionHandler, handleTemplateValue, config }) {
         </div>
       )}
 
-      <table className="table table-striped table-hover">
-        <thead className="table-dark">
+      <h5 className="modified-header">Today</h5>
+      <table className="table table-striped table-hover table-document">
+        <colgroup>
+          <col style={{ width: '50%' }} />
+          <col style={{ width: '23%' }} />
+          <col style={{ width: '23%' }} />
+          <col style={{ width: '4%' }} />
+        </colgroup>
+        <thead>
           <tr>
             <th>Document Title</th>
             <th>Last Modified</th>
@@ -200,6 +216,94 @@ function DocumentList({ selectionHandler, handleTemplateValue, config }) {
         <tbody>
           {documents &&
             documents
+              .filter(documentRow => documentRow.modifiedDate === today)
+              .filter(documentRow => documentRow.documentTitle.toLowerCase().includes(searchText.toLowerCase()))
+              .map(documentRow => (
+                <tr key={documentRow.id} className="document-row">
+                  <td onClick={() => selectionHandler(documentRow)} className="row-clickable">
+                    {documentRow.documentTitle}
+                  </td>
+                  <td onClick={() => selectionHandler(documentRow)} className="row-clickable">
+                    {documentRow.modifiedDate}
+                  </td>
+                  <td onClick={() => selectionHandler(documentRow)} className="row-clickable">
+                    {documentRow.userName.login}
+                  </td>
+                  <td>
+                    <Button variant="outline-info" className="reactstrap-button">
+                      <FontAwesomeIcon icon={faTrashCan} onClick={() => handleDeleteDocument(documentRow)} size="sm" />
+                    </Button>
+                  </td>
+                </tr>
+              ))}
+        </tbody>
+      </table>
+
+      <h5 className="modified-header">Last 7 Days</h5>
+      <table className="table table-striped table-hover table-document">
+        <colgroup>
+          <col style={{ width: '50%' }} />
+          <col style={{ width: '23%' }} />
+          <col style={{ width: '23%' }} />
+          <col style={{ width: '4%' }} />
+        </colgroup>
+        <thead>
+          <tr>
+            <th>Document Title</th>
+            <th>Last Modified</th>
+            <th>Owner</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          {documents &&
+            documents
+              .filter(
+                documentRow =>
+                  getDifferenceInDays(today, documentRow.modifiedDate) > 0 && getDifferenceInDays(today, documentRow.modifiedDate) <= 7
+              )
+              .filter(documentRow => documentRow.documentTitle.toLowerCase().includes(searchText.toLowerCase()))
+              .map(documentRow => (
+                <tr key={documentRow.id} className="document-row">
+                  <td onClick={() => selectionHandler(documentRow)} className="row-clickable">
+                    {documentRow.documentTitle}
+                  </td>
+                  <td onClick={() => selectionHandler(documentRow)} className="row-clickable">
+                    {documentRow.modifiedDate}
+                  </td>
+                  <td onClick={() => selectionHandler(documentRow)} className="row-clickable">
+                    {documentRow.userName.login}
+                  </td>
+                  <td>
+                    <Button variant="outline-info" className="reactstrap-button">
+                      <FontAwesomeIcon icon={faTrashCan} onClick={() => handleDeleteDocument(documentRow)} size="sm" />
+                    </Button>
+                  </td>
+                </tr>
+              ))}
+        </tbody>
+      </table>
+
+      <h5 className="modified-header">Earlier</h5>
+      <table className="table table-striped table-hover table-document">
+        <colgroup>
+          <col style={{ width: '50%' }} />
+          <col style={{ width: '23%' }} />
+          <col style={{ width: '23%' }} />
+          <col style={{ width: '4%' }} />
+        </colgroup>
+        <thead>
+          <tr>
+            <th>Document Title</th>
+            <th>Last Modified</th>
+            <th>Owner</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          {documents &&
+            documents
+              .filter(documentRow => getDifferenceInDays(today, documentRow.modifiedDate) > 7)
               .filter(documentRow => documentRow.documentTitle.toLowerCase().includes(searchText.toLowerCase()))
               .map(documentRow => (
                 <tr key={documentRow.id} className="document-row">

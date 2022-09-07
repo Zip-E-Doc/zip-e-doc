@@ -407,6 +407,16 @@ http://stackoverflow.com/questions/23436430/bootstrap-3-input-group-100-width */
   margin-top: 0.5rem;
 }
 
+tr td:first-of-type {
+  min-width: 50%;
+  max-width: 50%;
+}
+
+th:first-of-type {
+  min-width: 50%;
+  max-width: 50%;
+}
+
 tr td:last-of-type {
   padding-top: 0;
   padding-bottom: 0;
@@ -419,6 +429,11 @@ th:last-of-type {
   max-width: 1.5rem;
 }
 
+.table-document {
+  width: 100%;
+  table-layout: fixed;
+}
+
 .reactstrap-button {
   margin-top: 0.25rem;
   padding: 0.125rem 0.6rem;
@@ -427,4 +442,8 @@ th:last-of-type {
 
 .document-row:hover .reactstrap-button {
   display: inline-block;
+}
+
+.modified-header {
+  margin-top: 0.5rem;
 }
