@@ -316,6 +316,11 @@ http://stackoverflow.com/questions/23436430/bootstrap-3-input-group-100-width */
   margin: 0 auto;
 }
 
+.gutters-small {
+  width: 90%;
+  margin: 0 auto;
+}
+
 .document-list-button {
   margin-top: 0.5rem;
   margin-bottom: 0.5rem;
@@ -350,6 +355,10 @@ http://stackoverflow.com/questions/23436430/bootstrap-3-input-group-100-width */
 
 .flex-space-between {
   justify-content: space-between;
+}
+
+.flex-space-around {
+  justify-content: space-around;
 }
 
 .flex button {
@@ -418,8 +427,7 @@ th:first-of-type {
 }
 
 tr td:last-of-type {
-  padding-top: 0;
-  padding-bottom: 0;
+  padding: 0 2rem 0 0;
   min-width: 1.5rem;
   max-width: 1.5rem;
 }
@@ -440,10 +448,28 @@ th:last-of-type {
   display: none;
 }
 
+.document-row:hover {
+  background-color: #eee;
+}
+
 .document-row:hover .reactstrap-button {
   display: inline-block;
 }
 
 .modified-header {
   margin-top: 0.5rem;
+}
+
+.feature-cards {
+  margin-top: 1rem;
+}
+
+hr {
+  border: 2px solid black;
+  border-radius: 1px;
+  margin: 1rem 0;
+}
+
+.nav-splash {
+  align-items: center;
 }
