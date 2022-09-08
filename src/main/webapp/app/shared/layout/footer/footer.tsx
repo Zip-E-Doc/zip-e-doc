@@ -8,13 +8,13 @@ const Footer = () => (
   <div className="footer page-content">
     <Row>
       <Col md="12">
-        <p className="custom-footer">Brought to you by Zip Code Java 8.1</p>
+        {/* <p className="custom-footer">Brought to you by Zip Code Java 8.1</p>
         <ul className="list-unstyled">
           <li>Eric</li>
           <li>Mike</li>
           <li>Ryan</li>
           <li>Tristan</li>
-        </ul>
+        </ul> */}
       </Col>
     </Row>
   </div>
