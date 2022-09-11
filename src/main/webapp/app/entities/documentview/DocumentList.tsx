@@ -87,8 +87,8 @@ function DocumentList({ selectionHandler, handleTemplateValue, config }) {
         '/documents',
         {
           documentTitle: e.target[0].value,
-          createdDate: new Date().toISOString().substring(0, 10),
-          modifiedDate: new Date().toISOString().substring(0, 10),
+          createdDate: new Date(),
+          modifiedDate: new Date(),
           s3key: e.target[0].value,
           userName: null,
         },
