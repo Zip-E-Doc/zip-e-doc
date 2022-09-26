@@ -4,6 +4,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrashCan } from '@fortawesome/free-solid-svg-icons';
 import { Button } from 'reactstrap';
 import DeleteModal from './DeleteModal';
+import { useAppSelector } from 'app/config/store';
 
 function DocumentList({ selectionHandler, handleTemplateValue, config }) {
   const [documents, setDocuments] = useState([]);
@@ -15,6 +16,8 @@ function DocumentList({ selectionHandler, handleTemplateValue, config }) {
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [documentForDeletion, setDocumentForDeletion] = useState(null);
   const today = new Date().toISOString().substring(0, 10);
+  //assigned logged in account information to account
+  const account = useAppSelector(state => state.authentication.account);
 
   const handleCreateDocumentInput = () => {
     setShowCreateDocumentInput(!showCreateDocumentInput);
@@ -230,9 +233,11 @@ function DocumentList({ selectionHandler, handleTemplateValue, config }) {
                     {documentRow.userName.login}
                   </td>
                   <td>
-                    <Button variant="outline-info" className="reactstrap-button">
-                      <FontAwesomeIcon icon={faTrashCan} onClick={() => handleDeleteDocument(documentRow)} size="sm" />
-                    </Button>
+                    {documentRow.userName.login === account.login && (
+                      <Button variant="outline-info" className="reactstrap-button">
+                        <FontAwesomeIcon icon={faTrashCan} onClick={() => handleDeleteDocument(documentRow)} size="sm" />
+                      </Button>
+                    )}
                   </td>
                 </tr>
               ))}
@@ -275,9 +280,11 @@ function DocumentList({ selectionHandler, handleTemplateValue, config }) {
                     {documentRow.userName.login}
                   </td>
                   <td>
-                    <Button variant="outline-info" className="reactstrap-button">
-                      <FontAwesomeIcon icon={faTrashCan} onClick={() => handleDeleteDocument(documentRow)} size="sm" />
-                    </Button>
+                    {documentRow.userName.login === account.login && (
+                      <Button variant="outline-info" className="reactstrap-button">
+                        <FontAwesomeIcon icon={faTrashCan} onClick={() => handleDeleteDocument(documentRow)} size="sm" />
+                      </Button>
+                    )}
                   </td>
                 </tr>
               ))}
@@ -317,9 +324,11 @@ function DocumentList({ selectionHandler, handleTemplateValue, config }) {
                     {documentRow.userName.login}
                   </td>
                   <td>
-                    <Button variant="outline-info" className="reactstrap-button">
-                      <FontAwesomeIcon icon={faTrashCan} onClick={() => handleDeleteDocument(documentRow)} size="sm" />
-                    </Button>
+                    {documentRow.userName.login === account.login && (
+                      <Button variant="outline-info" className="reactstrap-button">
+                        <FontAwesomeIcon icon={faTrashCan} onClick={() => handleDeleteDocument(documentRow)} size="sm" />
+                      </Button>
+                    )}
                   </td>
                 </tr>
               ))}
